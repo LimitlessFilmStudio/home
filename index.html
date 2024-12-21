@@ -48,7 +48,7 @@
       height: auto;
       left: 5%;
       top: 10%;
-      background: #333;
+      background: #fff;
       border-radius: 15px;
       box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
       transform: translateY(calc(-1*var(--index) * 15%)) translateX(calc(var(--index) * 10%)) scale(1);
@@ -234,6 +234,25 @@
         font-size: 0.8rem;
       }
     }
+    footer {
+            background: #333;
+            color: #fff;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 30px;
+        }
+    .release-date {
+            font-size: 14px;
+            color: #777;
+            margin-top: -5px;
+            margin-bottom: 10px;
+        }
+        .job-title {
+            font-size: 14px;
+            color: #777;
+            margin-top: -5px;
+            margin-bottom: 10px;
+        }
   </style>
  </head>
 <body>
@@ -343,7 +362,23 @@
       <source type="video/mp4">
     </video>
   </div>
+<section id="contact" class="container">
+        <h2>联系方式</h2>
+        <ul>
+            <li>电子邮件: ednathan@foxmail.com</li>
+            <li>电话:李生 178-9609-7228</li>
+            <li>    闫生 185-1405-0716</li>
+        </ul>
+        <div class="social">
+            <a href="#"><i class="fab fa-weibo"></i></a>
+            <a href="#"><i class="fab fa-wechat"></i></a>
+            <a href="https://twitter.com/nathanlee"><i class="fab fa-twitter"></i></a>
+        </div>
+    </section>
 
+    <footer>
+        <p>Copyright &copy; 2024 Nathan Lee. All rights reserved.</p>
+    </footer>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const layers = document.querySelectorAll(".layer");
