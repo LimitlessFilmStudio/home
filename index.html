@@ -3,38 +3,65 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>叠层展示</title>
+  <title>不止电影工作室</title>
   <link rel="stylesheet" href="styles.css">
+</head>
 <style>
+/* 全局样式 */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
   background: #f7f7f7;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
+/* 标题和宣传语样式 */
+.header {
+  text-align: center;
+  padding: 20px;
+  background: #333;
+  color: white;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.header .tagline {
+  font-size: 1rem;
+  color: #ccc;
+  margin-top: 5px;
+}
+
+/* 叠层展示样式 */
 .container {
   position: relative;
   width: 100%;
-  height: 100vh;
+  flex: 1; /* 占据中间部分 */
+  padding: 10px; /* 增加边缘留白，便于切换 */
 }
+
+/* 叠层卡片样式 */
 .layer {
   position: absolute;
-  width: 92%; /* 宽度占屏幕 92% */
-  height: 80%; /* 高度占屏幕 80% */
-  left: 4%; /* 居中留白 */
-  top: 10%; /* 距顶部 10% */
+  width: 90%; /* 边缘间隙增大 */
+  height: 78%; /* 调整高度 */
+  left: 5%; /* 居中留白 */
+  top: 10%; /* 调整顶部间隙 */
   background: white;
   border-radius: 15px;
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-  transform: translateY(calc(var(--index, 0) * 15%)) scale(1);
-  opacity: 0.9; /* 初始透明度 */
+  transform: translateY(calc(var(--index, 0) * 18%)) scale(1); /* 增大垂直间距 */
+  opacity: 0.9;
   transition: transform 0.5s ease, box-shadow 0.3s ease, opacity 0.5s ease;
   z-index: calc(10 - var(--index, 0));
-  overflow-y: auto; /* 垂直滚动 */
+  overflow-y: auto;
   padding: 20px;
   cursor: pointer;
-  background-size: cover; /* 背景图片填充 */
+  background-size: cover;
   background-position: center;
 }
 
@@ -43,11 +70,6 @@ body {
   opacity: 1;
   z-index: 20;
   box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
-}
-
-.layer:not(.active):hover {
-  transform: translateY(calc(var(--index, 0) * 15% - 5%));
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 }
 
 .layer h2 {
@@ -84,24 +106,56 @@ body {
   background: rgba(0, 0, 0, 0.8);
 }
 
+/* 页底样式 */
+.footer {
+  text-align: center;
+  padding: 15px;
+  background: #333;
+  color: white;
+  font-size: 0.9rem;
+}
+
+.footer p {
+  margin: 5px 0;
+}
+
 /* 响应式设计 */
 @media (max-width: 768px) {
   .layer {
-    height: 85%; /* 手机屏幕占比更高 */
-    transform: translateY(calc(var(--index, 0) * 10%));
+    height: 85%;
+    transform: translateY(calc(var(--index, 0) * 12%)); /* 调整手机屏幕的层间距 */
     font-size: 0.9rem;
     padding: 15px;
   }
+
   .layer h2 {
     font-size: 1.2rem;
   }
+
   .layer p {
     font-size: 0.9rem;
+  }
+
+  .header h1 {
+    font-size: 1.5rem;
+  }
+
+  .header .tagline {
+    font-size: 0.9rem;
+  }
+
+  .footer {
+    font-size: 0.8rem;
   }
 }
 </style>
 </head>
 <body>
+  <!-- 网页标题 -->
+  <header class="header">
+    <h1>不止电影工作室</h1>
+    <p class="tagline">探索那些改变世界的精彩瞬间</p>
+  </header>
   <div class="container">
     <div class="layer" data-layer="1" data-bg="https://img2.doubanio.com/view/photo/l/public/p2525242851.jpg?text=背景+1">
       <button class="close-btn">×</button>
@@ -125,6 +179,11 @@ body {
       <p>代表作品：《欢乐颂1、2、3、4、5》《好家伙》、《凡人歌》、《都挺好》、《猎风行动》、《青年医生》</p>
     </div>
   </div>
+<!-- 页底联系方式 -->
+  <footer class="footer">
+    <p>© 2024 不止电影工作室</p>
+    <p>联系邮箱：ednathan@foxmail.com | 电话：+86 178-9609-7228</p>
+  </footer>
   <script src="script.js"></script>
 </body>
 <script>
