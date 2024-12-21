@@ -48,7 +48,7 @@
       width: 90%;
       height: auto;
       left: 5%;
-      top: 10%;
+      top: calc(10% + 20px); /* 调整为包含顶部间距 */
       background: white;
       border-radius: 15px;
       box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
@@ -165,6 +165,7 @@
 
       .container {
         padding: 5px;
+        margin-top: 15px; /* 手机屏幕上减少间距 */
       }
 
       .layer {
