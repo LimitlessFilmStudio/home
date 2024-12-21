@@ -110,11 +110,14 @@
       font-size: 1.2rem;
       color: #333;
     }
-
+    /* 电影信息文字自动换行 */
     .movie .info p {
       margin: 5px 0 0;
       font-size: 0.9rem;
       color: #555;
+      word-wrap: break-word;  /* 长单词自动换行 */
+      white-space: normal;    /* 允许换行 */
+      line-height: 1.4;  /* 增加行间距 */
     }
 
     /* 模态框样式 */
