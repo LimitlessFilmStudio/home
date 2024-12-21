@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>不止电影工作室</title>
   <style>
-    /* 全局样式 */
+   /* 全局样式 */
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #333;
+      background: #f7f7f7;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
@@ -41,16 +41,17 @@
       flex: 1;
       padding: 10px;
     }
+
     .layer {
       position: absolute;
       width: 90%;
-      height: auto; /* 自动调整高度 */
+      height: auto;
       left: 5%;
       top: 10%;
       background: white;
       border-radius: 15px;
       box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-      transform: translateY(calc(-1*var(--index) * 10%)) translateX(calc(var(--index) * 10%)) scale(1);
+      transform: translateY(calc(-1*var(--index) * 15%)) translateX(calc(var(--index) * 10%)) scale(1);
       opacity: 0.9;
       transition: transform 0.5s ease, box-shadow 0.3s ease, opacity 0.5s ease;
       z-index: calc(10 - var(--index));
@@ -162,10 +163,10 @@
 
       .layer {
         width: 100%;
-        height: auto; /* 高度自适应 */
+        height: auto;
         left: 0;
         top: 5%;
-        margin-bottom: 10px; /* 增加层与层之间的间距 */
+        margin-bottom: 10px;
       }
 
       .movie img {
@@ -311,42 +312,56 @@
   <!-- 模态框 -->
   <div class="modal" id="modal">
     <span class="close">&times;</span>
-    <video id="modal-video" controls>
-      <source src="" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
+    <video id="modal-video" controls></video>
   </div>
 
   <script>
-    // 获取所有电影海报图片和模态框
-    const movieImages = document.querySelectorAll('.movie img');
-    const modal = document.getElementById('modal');
-    const modalVideo = document.getElementById('modal-video');
-    const closeModal = document.querySelector('.close');
+    document.addEventListener("DOMContentLoaded", () => {
+      const layers = document.querySelectorAll(".layer");
+      const movieImages = document.querySelectorAll('.movie img');
+      const modal = document.getElementById('modal');
+      const modalVideo = document.getElementById('modal-video');
+      const closeModal = document.querySelector('.close');
 
-    movieImages.forEach(image => {
-      image.addEventListener('click', function() {
-        const videoUrl = image.getAttribute('data-video');
-        modal.style.display = "block";  // 显示模态框
-        modalVideo.src = videoUrl;     // 设置视频源
-        modalVideo.play();             // 自动播放视频
+      // 点击海报播放预告片
+      movieImages.forEach(image => {
+        image.addEventListener('click', function(e) {
+          const videoUrl = image.getAttribute('data-video');
+          modal.style.display = "block";
+          modalVideo.src = videoUrl;
+          modalVideo.play();
+          e.stopPropagation();  // 防止事件冒泡，避免触发layer的click事件
+        });
       });
-    });
 
-    // 点击关闭按钮时关闭模态框
-    closeModal.addEventListener('click', function() {
-      modal.style.display = "none";
-      modalVideo.pause();  // 停止视频播放
-      modalVideo.currentTime = 0;  // 重置视频播放时间
-    });
-
-    // 点击模态框外部区域时关闭模态框
-    window.addEventListener('click', function(event) {
-      if (event.target === modal) {
+      closeModal.addEventListener('click', () => {
         modal.style.display = "none";
         modalVideo.pause();
         modalVideo.currentTime = 0;
-      }
+      });
+
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.style.display = "none";
+          modalVideo.pause();
+          modalVideo.currentTime = 0;
+        }
+      });
+
+      // 点击叠层激活
+      layers.forEach(layer => {
+        layer.addEventListener("click", () => {
+          layers.forEach(l => l.classList.remove("active"));
+          layer.classList.add("active");
+        });
+      });
+
+      // 点击空白区域恢复布局
+      document.body.addEventListener("click", (e) => {
+        if (!e.target.closest(".layer") && !e.target.closest(".movie img")) {
+          layers.forEach(layer => layer.classList.remove("active"));
+        }
+      });
     });
   </script>
 </body>
