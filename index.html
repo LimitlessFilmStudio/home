@@ -51,10 +51,10 @@
       background: white;
       border-radius: 15px;
       box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-      transform: translateY(calc(var(--index, 0) * 18%)) scale(1);
+      transform: translateY(calc(var(--index) * 18%)) scale(1);
       opacity: 0.9;
       transition: transform 0.5s ease, box-shadow 0.3s ease, opacity 0.5s ease;
-      z-index: calc(10 - var(--index, 0));
+      z-index: calc(10 - var(--index));
       overflow-y: auto;
       padding: 20px;
       cursor: pointer;
@@ -158,7 +158,7 @@
   <!-- 叠层容器 -->
   <div class="container">
     <!-- Nathan Lee -->
-    <div class="layer" data-layer="1">
+    <div class="layer" style="--index: 0;">
       <h2>Nathan Lee</h2>
       <p>创始人 & 剪辑指导</p>
       <p>擅长精细化剪辑，主张“剪辑是故事的灵魂”，涉猎动作、剧情等多个题材。</p>
@@ -172,7 +172,7 @@
     </div>
 
     <!-- 闫瑞鹏 -->
-    <div class="layer" data-layer="2">
+    <div class="layer" style="--index: 1;">
       <h2>闫瑞鹏</h2>
       <p>剪辑师</p>
       <p>擅长镜头语言和精细化剪辑表达。</p>
@@ -183,17 +183,10 @@
           <p>科幻中的人性探讨。</p>
         </div>
       </div>
-      <div class="movie">
-        <img src="https://img2.doubanio.com/view/photo/l/public/p2614981818.webp" alt="扫黑">
-        <div class="info">
-          <h3>扫黑</h3>
-          <p>聚焦社会现实的震撼之作。</p>
-        </div>
-      </div>
     </div>
 
     <!-- 魏志华 -->
-    <div class="layer" data-layer="3">
+    <div class="layer" style="--index: 2;">
       <h2>魏志华</h2>
       <p>剪辑师</p>
       <p>以稳定风格和高效工作流程著称。</p>
@@ -202,13 +195,6 @@
         <div class="info">
           <h3>欢乐颂</h3>
           <p>都市女性的励志故事。</p>
-        </div>
-      </div>
-      <div class="movie">
-        <img src="https://img2.doubanio.com/view/photo/l/public/p2556380518.webp" alt="都挺好">
-        <div class="info">
-          <h3>都挺好</h3>
-          <p>家庭矛盾与和解的深刻讨论。</p>
         </div>
       </div>
     </div>
@@ -233,6 +219,7 @@
           modal.style.display = "block";
           modalImage.src = img.src;
           modalImage.alt = img.alt;
+          e.stopPropagation(); // 防止事件冒泡
         });
       });
 
@@ -241,17 +228,9 @@
         modal.style.display = "none";
       });
 
-      // 点击模态框外部关闭
       modal.addEventListener("click", (e) => {
         if (e.target === modal) {
           modal.style.display = "none";
-        }
-      });
-
-      // 点击空白区域恢复布局
-      document.body.addEventListener("click", (e) => {
-        if (!e.target.closest(".layer") && !e.target.closest(".movie img")) {
-          layers.forEach(layer => layer.classList.remove("active"));
         }
       });
 
@@ -261,6 +240,13 @@
           layers.forEach(l => l.classList.remove("active"));
           layer.classList.add("active");
         });
+      });
+
+      // 点击空白区域恢复布局
+      document.body.addEventListener("click", (e) => {
+        if (!e.target.closest(".layer")) {
+          layers.forEach(layer => layer.classList.remove("active"));
+        }
       });
     });
   </script>
