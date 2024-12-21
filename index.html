@@ -404,7 +404,9 @@
       const modal = document.getElementById('modal');
       const modalVideo = document.getElementById('modal-video');
       const closeModal = document.querySelector('.close');
-
+      // 确保模态框在初始化时是隐藏的
+      modal.style.display = "none";
+      modalVideo.pause(); // 停止播放
       // 点击海报播放视频
       movieImages.forEach(image => {
         image.addEventListener('click', function(e) {
