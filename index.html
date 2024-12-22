@@ -42,16 +42,16 @@
       padding: 10px;
       margin-top: 150px;
     }
-.layer {
+    .layer {
   position: absolute;
-  width: 90%;
-  height: auto;
-  left: 5%;
-  top: var(--top, 10%); /* 默认位置 */
+  width: 80%; /* 层的宽度 */
+  height: 70%;
+  top: var(--top, 10%); /* 默认纵向偏移 */
+  left: var(--left, 10%); /* 默认横向偏移 */
   background: white;
   border-radius: 15px;
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-  transition: transform 0.5s ease, box-shadow 0.3s ease, opacity 0.5s ease, top 0.5s ease;
+  transition: transform 0.5s ease, box-shadow 0.3s ease, opacity 0.5s ease, top 0.5s ease, left 0.5s ease;
   z-index: var(--z-index, 1); /* 动态层级 */
   overflow-y: auto;
   padding: 20px;
@@ -399,17 +399,20 @@
   const layers = document.querySelectorAll(".layer");
   const modal = document.getElementById("modal");
   const modalVideo = document.getElementById("modal-video");
-  const closeModal = document.querySelector(".modal .close");
-
+  const closeModal = document.querySelector(".modal .
+                                            
   let currentTopLayer = layers[0]; // 默认 Nathan Lee 为顶层
   let lastPlayedLayer = null; // 用于记录播放预告片的层
+close");
  // 确保模态框在初始化时是隐藏的
       modal.style.display = "none";
-      modalVideo.pause(); // 停止播放
+      modalVideo.pause(); // 停止
+      
   // 初始化叠层
   layers.forEach((layer, index) => {
     layer.style.setProperty("--z-index", layers.length - index); // 设置层级
-    layer.style.setProperty("--top", `${10 + index * 10}%`); // 设置初始位置
+    layer.style.setProperty("--top", `${10 + index * 10}%`); // 设置纵向偏移
+    layer.style.setProperty("--left", `${10 + index * 20}%`); // 设置横向偏移
     layer.addEventListener("click", () => {
       if (layer !== currentTopLayer) {
         switchLayers(layer); // 切换层
@@ -417,24 +420,27 @@
     });
   });
 
-  // 点击叠层时切换位置
+  // 切换层时更新位置
   function switchLayers(selectedLayer) {
     const selectedIndex = parseInt(selectedLayer.style.getPropertyValue("--z-index"));
     const currentTopIndex = parseInt(currentTopLayer.style.getPropertyValue("--z-index"));
 
-    // 互换层级和位置
+    // 互换层级
     selectedLayer.style.setProperty("--z-index", currentTopIndex);
     currentTopLayer.style.setProperty("--z-index", selectedIndex);
 
-    // 更新顶层标识
+    // 横向和纵向位置互换
     const tempTop = selectedLayer.style.getPropertyValue("--top");
+    const tempLeft = selectedLayer.style.getPropertyValue("--left");
     selectedLayer.style.setProperty("--top", currentTopLayer.style.getPropertyValue("--top"));
+    selectedLayer.style.setProperty("--left", currentTopLayer.style.getPropertyValue("--left"));
     currentTopLayer.style.setProperty("--top", tempTop);
+    currentTopLayer.style.setProperty("--left", tempLeft);
 
     currentTopLayer = selectedLayer; // 更新当前顶层
   }
 
-  // 点击电影海报播放预告片
+  // 点击海报播放预告片
   document.querySelectorAll(".movie img").forEach((img, index) => {
     img.addEventListener("click", (e) => {
       modal.style.display = "block";
@@ -445,7 +451,7 @@
     });
   });
 
-  // 关闭预告片时恢复播放层布局
+  // 关闭预告片恢复播放层布局
   closeModal.addEventListener("click", () => {
     modal.style.display = "none";
     modalVideo.pause();
