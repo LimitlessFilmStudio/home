@@ -3,507 +3,267 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Limitless Films</title>
+  <title>不止电影工作室</title>
   <style>
-    /* 全局样式 */
-    body {
+    /* 基础样式重置 */
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
       font-family: Arial, sans-serif;
       background: #333;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-
-    /* 标题和宣传语样式 */
-    .header {
+      padding: 20px;
       text-align: center;
-      padding: 20px;
-      background: #333;
-      color: white;
     }
 
-    .header h1 {
+    /* 页头样式 */
+    header {
+      background: #333;
+      color: #fff;
+      padding: 10px 20px;
+      text-align: center;
+    }
+
+    header h1 {
       margin: 0;
-      font-size: 2rem;
+      font-size: 24px;
     }
 
-    .header .tagline {
-      font-size: 1rem;
-      color: #ccc;
-      margin-top: 5px;
+    nav ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
     }
 
-    /* 叠层展示样式 */
+    nav ul li {
+      margin: 0 10px;
+    }
+
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    /* 容器样式 */
     .container {
-      position: relative;
-      width: 100%;
-      flex: 1;
-      padding: 10px;
-      margin-top: 100px;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      max-width: 2000px;
+      margin: 20px auto;
     }
+
+    /* 每一层样式 */
     .layer {
-      position: absolute;
-      width: 80%; /* 层的宽度 */
-      height: 70%;
-      top: var(--top, 10%); /* 默认纵向偏移 */
-      left: var(--left, 10%); /* 默认横向偏移 */
+      flex: 1;
       background: #333;
-      border-radius: 15px;
-      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-      transition: transform 0.5s ease, box-shadow 0.3s ease, opacity 0.5s ease, top 0.5s ease, left 0.5s ease;
-      z-index: var(--z-index, 1); /* 动态层级 */
-      overflow-y: auto;
-      padding: 20px;
-      cursor: pointer;
-     }
-    .layer.active {
-      transform: translateY(0) translateX(0) scale(1.05);
-      opacity: 1;
-      z-index: 20;
-      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+      border: 20px solid #333;
+      border-radius: 8px;
+      padding: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .layer:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     }
 
     .layer h2 {
-      margin: 0;
-      color: #555;
-      font-size: 1.4rem;
+      font-size: 18px;
+      margin-bottom: 10px;
+      color: #fff;
     }
 
     .layer p {
-      color: #555;
-      line-height: 1.5;
-      font-size: 1rem;
+      font-size: 14px;
+      color: #fff;
+      margin-bottom: 10px;
     }
 
-    /* 电影列表样式 */
-    .movie {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      margin-top: 15px;
-    }
-
-    .movie img {
-      width: 100px;
-      height: 150px;
-      border-radius: 10px;
-      object-fit: cover;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-    }
-
-    .movie img:hover {
-      transform: scale(1.1);
-    }
-
-    .movie .info {
-      flex: 1;
-    }
-
-    .movie .info h3 {
-      margin: 0;
-      font-size: 1.2rem;
-      color: #333;
-    }
-
-    .movie .info p {
-      margin: 5px 0 0;
-      font-size: 0.9rem;
-      color: #555;
-      word-wrap: break-word;  /* 长单词自动换行 */
-      white-space: normal;    /* 允许换行 */
-      line-height: 1.4;  /* 增加行间距 */
-    }
-/* 模态框背景 */
-#modal {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 60%;
-  height: 60%;
-  background: rgba(0, 0, 0, 0.7);
-  z-index: 9999; /* 确保高层级 */
-  display: flex;
-  justify-content: center;
-  align-items: center; /* 垂直居中 */
-}
-
-/* 模态框内容 */
-#modal-content {
-  position: relative;
-  background: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  max-width: 90%; /* 限制宽度 */
-  max-height: 90%; /* 限制高度 */
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* 视频样式 */
-#modal-video {
-  width: 60%;
-  height: auto;
-  max-height: 80%;
-  border-radius: 10px;
-}
-
-/* 关闭按钮 */
-.modal .close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: #000;
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-}
-    /* 响应式设计：适配手机和小屏幕 */
-    @media (max-width: 768px) {
-      .header h1 {
-        font-size: 1.5rem;
-      }
-
-      .header .tagline {
-        font-size: 0.9rem;
-      }
-
-      .container {
-        padding: 5px;
-        margin-top: 15px; /* 手机屏幕上减少间距 */
-      }
-
-      .layer {
-        width: 100%;
-        height: auto;
-        left: 0;
-        top: 5%;
-        margin-bottom: 10px;
-      }
-
-      .movie img {
-        width: 80px;
-        height: 120px;
-      }
-
-      .movie .info h3 {
-        font-size: 1rem;
-      }
-
-      .movie .info p {
-      margin: 5px 0 0;
-      font-size: 0.8rem;
-      color: #555;
-      word-wrap: break-word;  /* 长单词自动换行 */
-      white-space: normal;    /* 允许换行 */
-      line-height: 1.4;  /* 增加行间距 */
-      }
-
-      .layer h2 {
-        font-size: 1.2rem;
-      }
-
-      .layer p {
-        font-size: 0.9rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .header h1 {
-        font-size: 1.2rem;
-      }
-
-      .header .tagline {
-        font-size: 0.8rem;
-      }
-
-      .container {
-        margin-top: 60px;
-      }
-
-      .layer {
-        width: 100%;
-        height: auto;
-        left: 3%;
-        top: 5%;
-      }
-
-      .movie img {
-        width: 70px;
-        height: 100px;
-      }
-
-      .movie .info h3 {
-        font-size: 0.9rem;
-      }
-
-      .movie .info p {
-        margin: 5px 0 0;
-        font-size: 0.7rem;
-        color: #555;
-        word-wrap: break-word;  /* 长单词自动换行 */
-        white-space: normal;    /* 允许换行 */
-        line-height: 1.4;  /* 增加行间距 */
-      }
-
-      .layer h2 {
-        font-size: 1rem;
-      }
-
-      .layer p {
-        font-size: 0.8rem;
-      }
-    } 
-    
-    /* 模态框样式 */
-    .modal {
-      display: none; /* 默认隐藏模态框 */
-      position: fixed;
-      z-index: 1000;
-      left: 0;
-      top: 0;
-      width: 80%;
-      height: 80%;
-      overflow: auto;
-      background-color: rgba(0, 0, 0, 0.8);
+    .movie-item {
       display: flex;
       justify-content: center;
       align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
     }
 
-    .modal .close {
-      position: absolute;
-      top: 15px;
-      right: 35px;
-      color: white;
-      font-size: 30px;
-      font-weight: bold;
+    .movie-item img {
+      width: 40%;
+      border-radius: 10px;
       cursor: pointer;
     }
 
-    .modal video {
-      max-width: 80%;
-      max-height: 80%;
-      border-radius: 10px;
-      background-color: black;
+    .movie-info {
+      color: #fff;
+      text-align: left;
+    }
+
+    .movie-info p {
+      margin-bottom: 8px;
+    }
+
+    /* 弹出窗口样式 */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80%;
+      max-width: 600px;
+      background: #000;
+      color: #fff;
+      padding: 20px;
+      border-radius: 1px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+    }
+
+    .modal iframe {
+      width: 100%;
+      height: 300px;
+      border: none;
+    }
+
+    /* 背景遮罩层 */
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+    }
+
+    /* 响应式布局 */
+    @media screen and (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .movie-item {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .movie-item img {
+        width: 100%;
+      }
     }
   </style>
- </head>
+</head>
 <body>
-  <!-- 网页标题 -->
-  <header class="header">
+  <header>
     <h1>不止电影工作室</h1>
-    <p class="tagline">Limitless Motion Pictures</p>
-    <p class="tagline">光影不止，梦想不息</p>
+    <nav>
+      <ul>
+        <li><a href="#about">工作室简介</a></li>
+        <li><a href="#works">剪辑作品</a></li>
+        <li><a href="#contact">联系方式</a></li>
+      </ul>
+    </nav>
   </header>
 
-  <!-- 叠层容器 -->
   <div class="container">
-    <!-- Nathan Lee -->
-    <div class="layer" style="--index: 0;">
+    <!-- 第一层 -->
+    <div class="layer">
       <h2>Nathan Lee</h2>
-      <p>创始人 & 剪辑师</p>
-      <p>主张“剪辑是故事的灵魂”，涉猎犯罪、动作、剧情等多个题材。</p>
-      <p>参与作品：《731》、《重生》、《怒潮》、《危机航线》、《关于我妈的一切》、《如影随心》</p> 
-      <div class="movie">
-      <img src="https://img9.doubanio.com/view/photo/l/public/p2913215934.jpg" alt="危机航线" data-video="https://vt1.doubanio.com/202412212054/a8fb98b94271ffe3454cd1dbfdaae860/view/movie/M/703170941.mp4">
-      <div class="info">
-        <h3>危机航线</h3>
-        <p>上映时间: 2024年9月30日</p>
+      <p>创始人 & 剪辑指导</p>
+      <div class="movie-item">
+        <img src="https://img9.doubanio.com/view/photo/l/public/p2913215934.jpg" alt="电影海报" data-trailer="https://vod.pipi.cn/fec9203cvodtransbj1251246104/791f0c341397757894326119580/v.f42905.mp4">
+        <div class="movie-info">
+          <p><strong>电影名：</strong>怒潮</p>
+          <p><strong>导演：</strong>张艺谋</p>
+          <p><strong>上映日期：</strong>2023-11-27</p>
+          <p><strong>总票房：</strong>5亿人民币</p>
+        </div>
+      </div>
+      <div class="movie-item">
+        <img src="https://img1.doubanio.com/view/photo/l/public/p2911838840.jpg" alt="电影海报" data-trailer="https://vod.pipi.cn/fec9203cvodtransbj1251246104/eb2fe23b1397757890956248912/v.f42905.mp4">
+        <div class="movie-info">
+          <p><strong>电影名：</strong>重生</p>
+          <p><strong>导演：</strong>李安</p>
+          <p><strong>上映日期：</strong>2023-10-15</p>
+          <p><strong>总票房：</strong>7亿人民币</p>
+        </div>
       </div>
     </div>
 
-    <div class="movie">
-      <img src="https://img1.doubanio.com/view/photo/l/public/p2911838840.jpg" alt="重生" data-video="https://vt1.doubanio.com/202412212136/d9bc061d91c6480aa5c55e40f0111f08/view/movie/M/703170433.mp4">
-      <div class="info">
-        <h3>重生</h3>
-        <p>上映时间: 2024年8月16日</p>
+    <!-- 第二层 -->
+    <div class="layer">
+      <h2>Jane Doe</h2>
+      <p>参与电视剧《月光下的秘密》</p>
+      <div class="movie-item">
+        <img src="poster2.jpg" alt="电视剧海报" data-trailer="https://www.youtube.com/embed/abc456">
+        <div class="movie-info">
+          <p><strong>电影名：</strong>月光下的秘密</p>
+          <p><strong>导演：</strong>赵薇</p>
+          <p><strong>上映日期：</strong>2023-09-05</p>
+          <p><strong>总票房：</strong>2亿人民币</p>
+        </div>
       </div>
     </div>
-<div class="movie">
-      <img src="http://img5.mtime.cn/pi/2023/11/27/123039.96783807_1000X1000.jpg" alt="怒潮" data-video="https://vod.pipi.cn/fec9203cvodtransbj1251246104/16d41d183270835013807942221/v.f42905.mp4">
-      <div class="info">
-        <h3>怒潮</h3>
-        <p>上映时间: 2023年12月16日</p>
-      </div>
-    </div>
-<div class="movie">
-      <img src="http://img5.mtime.cn/pi/2021/09/07/104026.62931612_1000X1000.jpg" alt="关于我妈的一切" data-video="https://vt1.doubanio.com/202412212204/5b5b72da1302640a146443f912598da1/view/movie/M/402800382.mp4">
-      <div class="info">
-        <h3>关于我妈的一切</h3>
-        <p>上映时间: 2021年9月19日</p>
+
+    <!-- 第三层 -->
+    <div class="layer">
+      <h2>John Smith</h2>
+      <p>参与电影《星辰之间的旅程》</p>
+      <div class="movie-item">
+        <img src="poster3.jpg" alt="电影海报" data-trailer="https://www.youtube.com/embed/pqr789">
+        <div class="movie-info">
+          <p><strong>电影名：</strong>星辰之间的旅程</p>
+          <p><strong>导演：</strong>克里斯托弗·诺兰</p>
+          <p><strong>上映日期：</strong>2024-02-12</p>
+          <p><strong>总票房：</strong>8亿人民币</p>
+        </div>
       </div>
     </div>
   </div>
 
-    <!-- 闫瑞鹏 -->
-    <div class="layer" style="--index: 1;">
-      <h2>闫瑞鹏</h2>
-      <p>剪辑师</p>
-      <p>具备深厚的视觉艺术背景，专注于影像的创意剪辑。她对节奏把控和镜头语言的运用有着敏锐的洞察力。</p>
-      <p>参与作品：《球状闪电》、《消失的孩子》、《中国刑警》、《穿越寒冬拥抱你》、《扫黑》、《温暖的抱抱》、《英格力士》 、《刀背藏身》、《师父》、《闯入者》</p>
-      <div class="movie">
-        <img src="https://img9.doubanio.com/view/photo/l/public/p2740244776.jpg" alt="穿越寒冬拥抱你" data-video="https://vt1.doubanio.com/202412212151/a330bea46879a64ca85b6536acbff4b7/view/movie/M/402840565.mp4">
-        <div class="info">
-          <h3>穿越寒冬拥抱你</h3>
-          <p>上映时间: 2021年12月31日</p>
-        </div>
-      </div>
-      <div class="movie">
-        <img src="https://img1.doubanio.com/view/photo/l/public/p2641608918.jpg" alt="扫黑·决战" data-video="https://vt1.doubanio.com/202412212154/6b6e018a9fbb0f3b15365e99ced9633c/view/movie/M/402740931.mp4">
-        <div class="info">
-          <h3>扫黑·决战</h3>
-          <p>上映时间: 2021年5月1日</p>
-        </div>
-      </div>
-      <div class="movie">
-        <img src="https://img9.doubanio.com/view/photo/l/public/p2618431634.jpg" alt="温暖的抱抱" data-video="https://vt1.doubanio.com/202412212201/080242ffa78c5dc829ab3c68b8558cdc/view/movie/M/402700151.mp4">
-        <div class="info">
-          <h3>温暖的抱抱</h3>
-          <p>上映时间: 2020年12月31日</p>
-        </div>
-      </div>
-      <div class="movie">
-        <img src="https://img3.doubanio.com/view/photo/l/public/p2554541437.jpg" alt="师父" data-video="https://vt1.doubanio.com/202412212159/d159ecc1a394d1352457e3b734530a66/view/movie/M/301870551.mp4">
-        <div class="info">
-          <h3>师父</h3>
-          <p>上映时间: 2015年12月10日</p>
-        </div>
-      </div>
-    </div>
+  <!-- 背景遮罩层 -->
+  <div class="overlay"></div>
 
-    <!-- 魏志华 -->
-    <div class="layer" style="--index: 2;">
-      <h2>魏志华</h2>
-      <p>剪辑师</p>
-      <p>经验丰富的剪辑师，擅长快速高效的剪辑工作，确保项目按时完成，且质量上乘。</p>
-      <p>参与作品：《欢乐颂1、2、3、4、5》《好家伙》、《凡人歌》、《都挺好》、《猎风行动》、《青年医生》</p>
-      <div class="movie">
-        <img src="https://img2.doubanio.com/view/photo/l/public/p2912395181.jpg" alt="凡人歌" data-video="https://vt1.doubanio.com/202412212318/2d0a6a14117083aae61a6ce8f8078803/view/movie/M/703170548.mp4">
-        <div class="info">
-          <h3>凡人歌</h3>
-          <p>该剧讲述了三对30岁、40岁的夫妻或情侣在快节奏的大环境下，被生活围追堵截，努力自救，从而实现各自人生价值的故事。当了五年全职主妇的沈琳（殷桃 饰）遭遇丈夫那伟（王骁 饰）失业，夫妻双双无业，二胎嗷嗷待哺，房贷月月逼近，沈琳回归职场之路频频碰壁之后，选择变身个体户实现再就业；名校毕业的沈磊（秦俊杰 饰），考了公务员，在单位档案科工作，岁月静好，与世无争，妻子谢美蓝（陈昊宇 饰）却因他安于现状与之离婚，沈磊信念崩塌，辞去工作，离家出走；百万年薪的程序员那隽（张哲华 饰）被大厂齿轮裹挟前进，因高强度的工作患了惊恐症，为怕失业拼命掩饰，让以及时行乐为人生态度的女友李晓悦（章若楠 饰）难以理解，彼此相爱的两人渐行渐远。面对各自的人生窘境，他们不控诉不自怜，直面内心，共渡人生危机。</p>
-        </div>
-      </div>
-    <div class="movie">
-        <img src="https://img2.doubanio.com/view/photo/l/public/p2905423091.jpg" alt="欢乐颂5" data-video="https://vt1.doubanio.com/202412212320/ded316d8852c7b9a512f382d2dcfa3b8/view/movie/M/703150167.mp4">
-        <div class="info">
-          <h3>欢乐颂5</h3>
-          <p>22楼五个姑娘彼此相伴的日子还在继续，更多的困难也接踵而来，还好她们已足够了解彼此，感情也日益深厚，可以互相支撑度过这些难关。叶蓁蓁醉心科研之余频频受到戴维的家事影响，如何简单生活成了难题，幸好她立场坚定也足够清醒，又有足够爱她的家人，最终解决了这些困难。方芷衡意外收获了一个妹妹，这让她改变很多，逐渐回到生活的正轨上来。朱喆通过多年奋斗积累，完全靠自己在上海站稳了脚跟，也终于突破了事业的瓶颈。何悯鸿在走了一段弯路后，离开22楼又最终回归，开始学会思考，懂得付出，也明白人与人之间该如何相处。余初晖靠外部动力逼自己努力，渐渐走向自觉，稳步上升，摆脱了出身的桎梏。生活给予的考验和馈赠还会一直继续，但有22楼姐妹的支持和陪伴，她们就能勇往直前，一路奔向幸福。</p>
-        </div>
-      </div>
+  <!-- 弹出窗口 -->
+  <div class="modal">
+    <iframe src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
   </div>
-
-   <!-- 模态框 -->
-  <div id="modal">
-  <div id="modal-content">
-    <button class="close">&times;</button>
-    <video id="modal-video" controls></video>
-  </div>
-</div>
 
   <script>
+    // JavaScript: 弹出预告片功能
     document.addEventListener("DOMContentLoaded", () => {
-  const layers = document.querySelectorAll(".layer");
-  const modal = document.getElementById("modal");
-  const modalVideo = document.getElementById("modal-video");
-  const closeModal = document.querySelector(".modal .close");
-                                            
-  let currentTopLayer = layers[0]; // 默认 Nathan Lee 为顶层
-  let lastPlayedLayer = null; // 用于记录播放预告片的层
+      const images = document.querySelectorAll(".layer img");
+      const modal = document.querySelector(".modal");
+      const overlay = document.querySelector(".overlay");
+      const iframe = modal.querySelector("iframe");
 
- // 确保模态框在初始化时是隐藏的
-      modal.style.display = "none";
-      modalVideo.pause(); // 停止
-      
-  // 初始化叠层
-  layers.forEach((layer, index) => {
-    layer.style.setProperty("--z-index", layers.length - index); // 设置层级
-    layer.style.setProperty("--top", `${10 + index * 10}%`); // 设置纵向偏移
-    layer.style.setProperty("--left", `${10 + index * 20}%`); // 设置横向偏移
-    layer.addEventListener("click", () => {
-      if (layer !== currentTopLayer) {
-        switchLayers(layer); // 切换层
-      }
+      // 点击海报显示预告片
+      images.forEach((img) => {
+        img.addEventListener("click", () => {
+          const trailerUrl = img.getAttribute("data-trailer");
+          iframe.src = trailerUrl;
+          modal.style.display = "block";
+          overlay.style.display = "block";
+        });
+      });
+
+      // 点击遮罩层关闭预告片
+      overlay.addEventListener("click", () => {
+        modal.style.display = "none";
+        overlay.style.display = "none";
+        iframe.src = ""; // 停止播放
+      });
     });
-  });
-
-  // 切换层时更新位置
-  function switchLayers(selectedLayer) {
-    const selectedIndex = parseInt(selectedLayer.style.getPropertyValue("--z-index"));
-    const currentTopIndex = parseInt(currentTopLayer.style.getPropertyValue("--z-index"));
-
-    // 互换层级
-    selectedLayer.style.setProperty("--z-index", currentTopIndex);
-    currentTopLayer.style.setProperty("--z-index", selectedIndex);
-
-    // 横向和纵向位置互换
-    const tempTop = selectedLayer.style.getPropertyValue("--top");
-    const tempLeft = selectedLayer.style.getPropertyValue("--left");
-    selectedLayer.style.setProperty("--top", currentTopLayer.style.getPropertyValue("--top"));
-    selectedLayer.style.setProperty("--left", currentTopLayer.style.getPropertyValue("--left"));
-    currentTopLayer.style.setProperty("--top", tempTop);
-    currentTopLayer.style.setProperty("--left", tempLeft);
-
-    currentTopLayer = selectedLayer; // 更新当前顶层
-  }
-
-  // 点击海报播放预告片
-  document.querySelectorAll(".movie img").forEach((img, index) => {
-    img.addEventListener("click", (e) => {
-      modal.style.display = "block";
-      modalVideo.src = img.dataset.trailer; // 从自定义属性获取预告片地址
-      modalVideo.play();
-      lastPlayedLayer = layers[index]; // 记录播放预告片的层
-      e.stopPropagation(); // 阻止事件冒泡
-    });
-  });
-
-  // 关闭预告片恢复播放层布局
-  closeModal.addEventListener("click", () => {
-    modal.style.display = "none";
-    modalVideo.pause();
-    modalVideo.src = "";
-
-    if (lastPlayedLayer) {
-      // 切换回播放层布局
-      switchLayers(lastPlayedLayer);
-      lastPlayedLayer = null; // 重置播放层记录
-    }
-  });
-
-  // 点击空白区域时恢复当前顶层布局
-  document.body.addEventListener("click", (e) => {
-    if (!e.target.closest(".layer") && modal.style.display === "none") {
-      switchLayers(currentTopLayer);
-    }
-  });
-
-  // 防止点击模态框内部关闭模态框
-  modal.addEventListener("click", (e) => {
-    if (e.target === modal) {
-      modal.style.display = "none";
-      modalVideo.pause();
-      modalVideo.src = "";
-
-      if (lastPlayedLayer) {
-        switchLayers(lastPlayedLayer);
-        lastPlayedLayer = null;
-      }
-    }
-  });
-});
   </script>
 </body>
 </html>
