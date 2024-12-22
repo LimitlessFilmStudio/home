@@ -91,7 +91,7 @@
     .movie-item {
       display: flex;
       justify-content: center;
-      align-items: left;
+      align-items: center;
       gap: 15px;
       margin-bottom: 20px;
     }
@@ -102,6 +102,7 @@
       height: auto;
       border-radius: 10px;
       cursor: pointer;
+      margin-left: 0; /* 确保贴合左侧 */
     }
 
     .movie-info {
@@ -174,12 +175,13 @@
       }
       .movie-item {
         flex-direction: column;
-        align-items: left;
+        align-items: center;
       }
 
       .movie-item img {
         width: 50%;
         height: auto;
+        margin-left: 0; /* 确保贴合左侧 */
       }
     }
     footer {
