@@ -35,14 +35,14 @@ header {
 }
     header h1 {
       margin: 0;
-      font-size: 24px;
+      font-size: 32px;
       margin-bottom: 10px;
       letter-spacing: 10px; /* 字母间距，单位可以是px、em等 */
     }
     header p {
       font-size: 12px;
       margin-bottom: 10px;
-      letter-spacing: 10px; /* 字母间距，单位可以是px、em等 */
+      letter-spacing: 5px; /* 字母间距，单位可以是px、em等 */
     }
     .page-header {
       position: relative;
@@ -167,7 +167,17 @@ header {
         flex-wrap: wrap;
         justify-content: center;
     }
-
+header {
+  gap: 20px; /* 添加间距 */
+}
+    header h1 {
+      font-size: 24px; 
+      letter-spacing: 10px; /* 字母间距，单位可以是px、em等 */
+    }
+    header p {
+      font-size: 12px;
+      letter-spacing: 5px; /* 字母间距，单位可以是px、em等 */
+    }
     .layer {
       flex: 1 1 calc(33.333% - 20px);
         margin-bottom: 10px;
