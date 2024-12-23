@@ -19,16 +19,20 @@
       text-align: center;
     }
     /* 页头样式 */
-    header {
-      background: #333;
-      color: #fff;
-      padding: 10px 20px;
-      text-align: center;
-      text-shadow: 10px 10px 10px rgba(0, 0, 0, 0.6);
-      margin-top: 40px;
-      margin-bottom: 50px;
-    }
-
+header {
+  display: flex;
+  flex-direction: row; /* 改为横向排列 */
+  align-items: center;
+  justify-content: center;
+  background: #333;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+  gap: 10px; /* 添加间距 */
+  text-shadow: 10px 10px 10px rgba(0, 0, 0, 0.6);
+  margin-top: 40px;
+  margin-bottom: 50px;
+}
     header h1 {
       margin: 0;
       font-size: 24px;
