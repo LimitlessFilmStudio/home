@@ -19,16 +19,14 @@
       text-align: center;
     }
     /* 页头样式 */
-header {
+    header {
   display: flex;
-  flex-direction: row; /* 改为横向排列 */
+  flex-direction: column; /* 默认纵向排列 */
   align-items: center;
   justify-content: center;
   background: #333;
   color: #fff;
-  padding: 20px;
-  text-align: center;
-  gap: 200px; /* 添加间距 */
+  padding: 10px 20px;
   text-shadow: 10px 10px 10px rgba(0, 0, 0, 0.6);
   margin-top: 40px;
   margin-bottom: 50px;
@@ -167,15 +165,10 @@ header {
         flex-wrap: wrap;
         justify-content: center;
     }
-header {
-  gap: 2px; /* 添加间距 */
-}
     header h1 {
-      font-size: 16px; 
       letter-spacing: 1px; /* 字母间距，单位可以是px、em等 */
     }
     header p {
-      font-size: 8px;
       letter-spacing: 1px; /* 字母间距，单位可以是px、em等 */
     }
     .layer {
