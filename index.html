@@ -42,22 +42,19 @@
       margin-bottom: 10px;
       letter-spacing: 5px; /* 字母间距，单位可以是px、em等 */
     }
-    .page-header {
-      position: relative;
-      padding-bottom: 10px; /* 页头与细线间距 */
-      margin-bottom: 20px; /* 细线与内容间距 */
-    }
-
-    .page-header::after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background-color: #fff; /* 细线颜色 */
-    }
-
+/* 工作室介绍部分 */
+.studio-intro {
+  background: #444;
+  color: #fff;
+  padding: 20px;
+  margin: 10px auto 20px;
+  border-radius: 8px;
+  max-width: 1200px;
+  font-size: 16px;
+  line-height: 1.6;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
     /* 容器样式 */
     .container {
       display: flex;
@@ -171,6 +168,10 @@
     header p {
       letter-spacing: 1px; /* 字母间距，单位可以是px、em等 */
     }
+      .studio-intro {
+    padding: 15px;
+    font-size: 14px;
+  }
     .layer {
       flex: 1 1 calc(33.333% - 20px);
         margin-bottom: 10px;
@@ -218,6 +219,10 @@
     <h1>不止电影工作室</h1>
     <p>光影不止，梦想不息</p>  
   </header>
+  <!-- 新增工作室介绍 -->
+<section class="studio-intro">
+  <p>不止电影工作室致力于为电影赋予艺术生命，专注于剪辑的每一个细节，打造震撼人心的视觉体验。</p>
+</section>
   <div class="container">
     <!-- 第一层 -->
     <div class="layer">
