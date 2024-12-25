@@ -18,6 +18,42 @@
       padding: 20px;
       text-align: center;
     }
+    /* 顶部右侧菜单样式 */
+.top-right-menu {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 5px;
+  padding: 10px;
+  z-index: 1000;
+}
+
+.top-right-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 10px;
+}
+
+.top-right-menu ul li {
+  display: inline-block;
+}
+
+.top-right-menu ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  padding: 5px 10px;
+  border-radius: 3px;
+  transition: background-color 0.3s ease;
+}
+
+.top-right-menu ul li a:hover {
+  background-color: #333;
+  color: #333;
+}
     /* 页头样式 */
     header {
       display: flex;
@@ -208,6 +244,16 @@
         display: block;
         margin: 10px 0;
     }
+    .top-right-menu {
+        right: 5px;
+        top: 5px;
+        padding: 5px;
+    }
+
+    .top-right-menu ul {
+        flex-direction: column;
+        gap: 5px;
+    }
     }
     footer {
         background: #333;
@@ -220,6 +266,7 @@
     footer p {
         margin: 5px 0;
     }
+    /* 页脚友情链接样式 */
     .friend-links {
         background-color: #333;
         color: #fff;
@@ -429,11 +476,19 @@
   <div class="modal">
     <iframe src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
   </div>
-<footer>
+  <div class="top-right-menu">
+  <ul>
+    <li><a href="#footer-contact">联系方式</a></li>
+    <li><a href="#footer-links">友情链接</a></li>
+  </ul>
+</div>
+
+<footer id="footer-contact">
   <p>© 2024 Limitless Film Studio</p>
   <p>联系方式：ednathan@foxmail.com | 微信+电话：李生 178-9609-7228| 微信+电话：闫生 185-1405-0716</p>
 </footer>
-  <div class="friend-links">
+
+<div id="footer-links" class="friend-links">  
   <h3>友情链接</h3>
   <ul>
     <li><a href="https://www.provideocoalition.com" target="_blank">Provideocoalition</a></li>
