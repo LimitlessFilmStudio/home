@@ -25,6 +25,11 @@
       border-radius: 5px;
       padding: 10px;
       z-index: 1000;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .top-right-menu.hidden {
+      transform: translateY(-100%);
+      opacity: 0;
     }
     .top-right-menu ul {
       list-style: none;
@@ -515,6 +520,22 @@
         iframe.src = ""; // 停止播放
       });
     });
+    let lastScrollY = window.scrollY; // 保存上一次滚动位置
+  const menu = document.getElementById('topMenu'); // 获取菜单元素
+
+  window.addEventListener('scroll', () => {
+    const currentScrollY = window.scrollY;
+
+    if (currentScrollY > lastScrollY && currentScrollY > 50) {
+      // 向下滚动且页面已滚动一定距离时隐藏菜单
+      menu.classList.add('hidden');
+    } else {
+      // 向上滚动或页面在顶部时显示菜单
+      menu.classList.remove('hidden');
+    }
+
+    lastScrollY = currentScrollY; // 更新上一次滚动位置
+  });
   </script>
 </body>
 </html>
