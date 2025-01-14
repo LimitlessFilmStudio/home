@@ -597,11 +597,11 @@
 
           // 切换当前子菜单显示状态
           const isDisplayed = submenu.style.display === 'block';
-          hideAllSubmenus(); // 先隐藏所有子菜单
           submenu.style.display = isDisplayed ? 'none' : 'block';
         });
+      });
 
-      // 点击其他地方隐藏所有子菜单
+      // 点击页面其他地方时隐藏所有子菜单
       document.addEventListener('click', () => {
         hideAllSubmenus();
       });
@@ -612,7 +612,6 @@
           submenu.style.display = 'none';
         });
       }
-    });
   // 点击海报显示预告片
   images.forEach((img) => {
     img.addEventListener("click", () => {
