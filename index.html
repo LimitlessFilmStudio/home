@@ -230,22 +230,18 @@
        padding: 10px;
     }
     .menu {
-       flex-direction: column; /* 菜单纵向排列 */
        align-items: flex-start; /* 对齐到左侧 */
        gap: 10px; /* 调整间距 */
     }
-    .menu-item {
-       width: 100%; /* 菜单项占据整行 */
-    }
    .submenu {
-       position: relative; /* 子菜单在手机屏幕中不悬浮 */
-       top: auto;
-       right: auto;
        min-width: 100%; /* 子菜单宽度调整为 100% */
-       box-shadow: none; /* 移除阴影 */
+    }
+    .submenu li {
+       padding: 5px 10px;
+       font-size: 10px;
     }
     .menu-button {
-       font-size: 18px; /* 字体稍微增大 */
+       font-size: 10px; /* 字体稍微增大 */
     }
     .container {
       flex-wrap: wrap;
