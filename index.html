@@ -268,7 +268,11 @@
        font-size: 10px; /* 字体稍微增大 */
     }
    .submenu {
+       position: relative; /* 子菜单在手机屏幕中不悬浮 */
+       top: auto;
+       right: auto;
        min-width: 100%; /* 子菜单宽度调整为 100% */
+       box-shadow: none; /* 移除阴影 */
     }
     .submenu li {
        padding: 5px 10px;
@@ -584,31 +588,41 @@
   const iframe = modal.querySelector("iframe");
   const menu = document.getElementById("topMenu"); // 获取菜单元素
   let lastScrollY = window.scrollY; // 保存上一次滚动位置
-  const menuItems = document.querySelectorAll('.menu-item');
+  const menuButtons = document.querySelectorAll('.menu-button');
+      const submenus = document.querySelectorAll('.submenu');
 
-      // 为每个菜单项添加点击事件监听
-      menuItems.forEach((menuItem) => {
-        const menuButton = menuItem.querySelector('.menu-button');
-        const submenu = menuItem.querySelector('.submenu');
+      // 记录当前打开的菜单
+      let activeMenu = null;
 
+      // 为每个菜单按钮添加点击事件监听
+      menuButtons.forEach((menuButton) => {
         menuButton.addEventListener('click', (e) => {
-          // 阻止冒泡，防止触发全局点击事件
           e.stopPropagation();
 
-          // 切换当前子菜单显示状态
-          const isDisplayed = submenu.style.display === 'block';
-          submenu.style.display = isDisplayed ? 'none' : 'block';
+          const submenu = menuButton.nextElementSibling;
+
+          // 如果当前菜单已经打开，再次点击关闭
+          if (submenu === activeMenu) {
+            submenu.style.display = 'none';
+            activeMenu = null;
+          } else {
+            // 隐藏其他子菜单
+            hideAllSubmenus();
+            submenu.style.display = 'block';
+            activeMenu = submenu;
+          }
         });
       });
 
       // 点击页面其他地方时隐藏所有子菜单
       document.addEventListener('click', () => {
         hideAllSubmenus();
+        activeMenu = null;
       });
 
       // 隐藏所有子菜单的函数
       function hideAllSubmenus() {
-        document.querySelectorAll('.submenu').forEach((submenu) => {
+        submenus.forEach((submenu) => {
           submenu.style.display = 'none';
         });
       }
