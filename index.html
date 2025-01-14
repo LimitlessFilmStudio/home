@@ -263,6 +263,9 @@
        align-items: flex-start; /* 对齐到左侧 */
        gap: 10px; /* 调整间距 */
     }
+    .menu-button {
+       font-size: 10px; /* 字体稍微增大 */
+    }
    .submenu {
        min-width: 100%; /* 子菜单宽度调整为 100% */
     }
@@ -270,8 +273,8 @@
        padding: 5px 10px;
        font-size: 10px;
     }
-    .menu-button {
-       font-size: 10px; /* 字体稍微增大 */
+    .menu-item:hover .submenu {
+      display: block;
     }
     .container {
       flex-wrap: wrap;
