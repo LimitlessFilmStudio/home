@@ -54,6 +54,7 @@
       margin: 0;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
       min-width: 200px; /* 子菜单最小宽度，防止内容太短 */
+      z-index: 100; /* 确保子菜单在顶层 */
     }
     .submenu li {
       padding: 5px 20px;
@@ -583,7 +584,35 @@
   const iframe = modal.querySelector("iframe");
   const menu = document.getElementById("topMenu"); // 获取菜单元素
   let lastScrollY = window.scrollY; // 保存上一次滚动位置
+  const menuItems = document.querySelectorAll('.menu-item');
 
+      // 为每个菜单项添加点击事件监听
+      menuItems.forEach((menuItem) => {
+        const menuButton = menuItem.querySelector('.menu-button');
+        const submenu = menuItem.querySelector('.submenu');
+
+        menuButton.addEventListener('click', (e) => {
+          // 阻止冒泡，防止触发全局点击事件
+          e.stopPropagation();
+
+          // 切换当前子菜单显示状态
+          const isDisplayed = submenu.style.display === 'block';
+          hideAllSubmenus(); // 先隐藏所有子菜单
+          submenu.style.display = isDisplayed ? 'none' : 'block';
+        });
+
+      // 点击其他地方隐藏所有子菜单
+      document.addEventListener('click', () => {
+        hideAllSubmenus();
+      });
+
+      // 隐藏所有子菜单的函数
+      function hideAllSubmenus() {
+        document.querySelectorAll('.submenu').forEach((submenu) => {
+          submenu.style.display = 'none';
+        });
+      }
+    });
   // 点击海报显示预告片
   images.forEach((img) => {
     img.addEventListener("click", () => {
