@@ -17,41 +17,58 @@
       padding: 20px;
       text-align: center;
     }
-    /* 顶部右侧菜单样式 */
-    .top-right-menu {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      border-radius: 5px;
-      padding: 10px;
-      z-index: 1000;
-      transition: transform 0.3s ease, opacity 0.3s ease;
+    .navbar {
+      background-color: #333;
+      border-bottom: 1px solid #ddd;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: flex-end; /* 将导航栏内容对齐到右上角 */
     }
-    .top-right-menu.hidden {
-      transform: translateY(-100%);
-      opacity: 0;
-    }
-    .top-right-menu ul {
+    .menu {
       list-style: none;
       margin: 0;
       padding: 0;
       display: flex;
-      gap: 10px;
+      gap: 20px;
     }
-    .top-right-menu ul li {
-      display: inline-block;
+    .menu-item {
+      position: relative;
     }
-    .top-right-menu ul li a {
-      color: #fff;
-      text-decoration: none;
-      font-size: 14px;
-      padding: 5px 10px;
-      border-radius: 3px;
-      transition: background-color 0.3s ease;
+    .menu-button {
+      background: none;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      text-align: right; 
+      color: #fff; /* 菜单字体颜色为白色 */
     }
-    .top-right-menu ul li a:hover {
+    .submenu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0; /* 子菜单靠右对齐，防止溢出 */
       background-color: #fff;
-      color: red;
+      border: 1px solid #555;
+      list-style: none;
+      padding: 10px 0;
+      margin: 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      min-width: 180px; /* 子菜单最小宽度，防止内容太短 */
+    }
+    .submenu li {
+      padding: 5px 20px;
+      font-size: 14px;
+    }
+    .submenu li a {
+      text-decoration: none;
+      color: #333;
+    }
+    .submenu li a:hover {
+      color: #007BFF;
+    }
+    /* 子菜单显示样式 */
+    .menu-item:hover .submenu {
+      display: block;
     }
     /* 页头样式 */
     header {
@@ -207,39 +224,29 @@
         margin: 5px 0;
     }
     
-    /* 页脚探索更多样式 */
-    .more {
-        background-color: #333;
-        color: #fff;
-        text-align: center;
-        padding: 20px 0;
-        margin-top: 5px;
-    }
-    .more h3 {
-        margin-bottom: 10px;
-        font-size: 14px;
-        color: #fff; /* 可根据需要修改颜色 */
-    }
-    .more ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-    .more ul li {
-        display: inline-block;
-        margin: 0 10px;
-    }
-    .more ul li a {
-       color: #fff;
-       text-decoration: none;
-       font-size: 12px;
-    }
-    .more ul li a:hover {
-       color: red; /* 鼠标悬停颜色 */
-    }
-    
     /* 响应式布局 */
     @media screen and (max-width: 768px) {
+    .navbar {
+       padding: 10px;
+    }
+    .menu {
+       flex-direction: column; /* 菜单纵向排列 */
+       align-items: flex-start; /* 对齐到左侧 */
+       gap: 10px; /* 调整间距 */
+    }
+    .menu-item {
+       width: 100%; /* 菜单项占据整行 */
+    }
+   .submenu {
+       position: relative; /* 子菜单在手机屏幕中不悬浮 */
+       top: auto;
+       right: auto;
+       min-width: 100%; /* 子菜单宽度调整为 100% */
+       box-shadow: none; /* 移除阴影 */
+    }
+    .menu-button {
+       font-size: 18px; /* 字体稍微增大 */
+    }
     .container {
       flex-wrap: wrap;
       justify-content: center;
@@ -294,24 +301,49 @@
       height: auto;
       margin-left: 0; /* 确保贴合左侧 */
     }
-    .more ul li {
-      display: block;
-      margin: 5px 0;
-    }
-    .top-right-menu {
-      right: 5px;
-      top: 5px;
-      padding: 5px;
-    }
-    .top-right-menu ul {
-      flex-direction: row;
-      gap: 2px;
-    }
-    }   
+  }   
   </style>
 </head>
   
 <body>
+   <nav class="navbar">
+    <ul class="menu">
+      <!-- 第一组导航菜单 -->
+      <li class="menu-item">
+        <button class="menu-button">Contact▼</button>
+        <ul class="submenu">
+          <li><a href="#">邮箱：ednathan@foxmail.com</a></li>
+          <li><a href="#">电话(微信)：李生 178-9609-7228</a></li>
+          <li><a href="#">电话(微信)：闫生 185-1405-0716</a></li>
+        </ul>
+      </li>
+
+      <!-- 第二组导航菜单 -->
+      <li class="menu-item">
+        <button class="menu-button">AI▼</button>
+        <ul class="submenu">
+          <li><a href="https://aiclonevoicefree.com" target="_blank">Aiclonevoicefree</a></li>
+          <li><a href="https://chatgpt.com" target="_blank">ChatGPT</a></li>
+          <li><a href="https://www.vidnoz.com" target="_blank">Vidnoz</a></li>
+        </ul>
+      </li>
+
+      <!-- 第三组导航菜单 -->
+      <li class="menu-item">
+        <button class="menu-button">More▼</button>
+        <ul class="submenu">
+          <li><a href="https://www.provideocoalition.com" target="_blank">Provideocoalition</a></li>
+          <li><a href="https://www.kinosoundtrack.com" target="_blank">Kinosoundtrack</a></li>
+          <li><a href="https://www.online-convert.com" target="_blank">Online-Convert</a></li>
+          <li><a href="https://www.avid.com" target="_blank">AVID</a></li>
+          <li><a href="https://www.newcger.com" target="_blank">NewCGer</a></li>
+          <li><a href="http://www.akuziti.com/mb/" target="_blank">毛笔字在线生成器</a></li>
+          <li><a href="https://movie.douban.com" target="_blank">豆瓣电影</a></li>
+          <li><a href="https://www.gyg.la" target="_blank">观影</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
   <header>
     <h3>Limitless Film Studio</h3>
     <h1>不止电影工作室</h1>
@@ -491,33 +523,11 @@
   <div class="modal">
     <iframe src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
   </div>
-  <div class="top-right-menu">
-  <ul>
-    <li><a href="#footer-contact">联系方式</a></li>
-    <li><a href="#more">探索更多</a></li>
-  </ul>
-</div>
-
+  
 <footer id="footer-contact">
   <p>© 2024 Limitless Film Studio</p>
   <p>联系方式：ednathan@foxmail.com | 微信+电话：李生 178-9609-7228| 微信+电话：闫生 185-1405-0716</p>
 </footer>
-
-<div id="more" class="more">  
-  <h3>探索更多</h3>
-  <ul>
-    <li><a href="https://www.provideocoalition.com" target="_blank">Provideocoalition</a></li>
-    <li><a href="https://www.avid.com" target="_blank">AVID</a></li>
-    <li><a href="https://www.kinosoundtrack.com" target="_blank">Kinosoundtrack</a></li>
-    <li><a href="https://freesound.org" target="_blank">Freesound</a></li>
-    <li><a href="https://aiclonevoicefree.com" target="_blank">Aiclonevoicefree</a></li>
-    <li><a href="https://www.online-convert.com" target="_blank">Online-Convert</a></li>
-    <li><a href="https://www.newcger.com" target="_blank">NewCGer</a></li>
-    <li><a href="http://www.akuziti.com/mb/" target="_blank">毛笔字在线生成器</a></li>
-    <li><a href="https://movie.douban.com" target="_blank">豆瓣电影</a></li>
-    <li><a href="https://www.gyg.la" target="_blank">观影</a></li>
-  </ul>
-</div>
   <script>
     // JavaScript: 弹出预告片功能
     document.addEventListener("DOMContentLoaded", () => {
@@ -544,20 +554,6 @@
     overlay.style.display = "none";
     iframe.src = ""; // 停止播放
   });
-
-  // 滚动时动态显示或隐藏菜单
-  window.addEventListener("scroll", () => {
-    const currentScrollY = window.scrollY;
-
-    if (currentScrollY > lastScrollY && currentScrollY > 50) {
-      // 向下滚动且页面已滚动一定距离时隐藏菜单
-      menu.classList.add("hidden");
-    } else {
-      // 向上滚动或页面在顶部时显示菜单
-      menu.classList.remove("hidden");
-    }
-
-    lastScrollY = currentScrollY; // 更新上一次滚动位置
   });
 });
   </script>
