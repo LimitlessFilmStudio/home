@@ -223,6 +223,36 @@
     footer p {
         margin: 5px 0;
     }
+    /* 页脚探索更多样式 */
+    .more {
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        padding: 20px 0;
+        margin-top: 5px;
+    }
+    .more h3 {
+        margin-bottom: 10px;
+        font-size: 14px;
+        color: #fff; /* 可根据需要修改颜色 */
+    }
+    .more ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .more ul li {
+        display: inline-block;
+        margin: 0 10px;
+    }
+    .more ul li a {
+       color: #fff;
+       text-decoration: none;
+       font-size: 12px;
+    }
+    .more ul li a:hover {
+       color: red; /* 鼠标悬停颜色 */
+    }
     
     /* 响应式布局 */
     @media screen and (max-width: 768px) {
@@ -296,6 +326,10 @@
       width: 100%;
       height: auto;
       margin-left: 0; /* 确保贴合左侧 */
+    }
+    .more ul li {
+      display: block;
+      margin: 5px 0;
     }
   }   
   </style>
@@ -524,7 +558,23 @@
   <p>© 2024 Limitless Film Studio</p>
   <p>联系方式：ednathan@foxmail.com | 微信+电话：李生 178-9609-7228| 微信+电话：闫生 185-1405-0716</p>
 </footer>
-  <script>
+
+<div id="more" class="more">  
+  <h3>探索更多</h3>
+  <ul>
+    <li><a href="https://www.provideocoalition.com" target="_blank">Provideocoalition</a></li>
+    <li><a href="https://www.avid.com" target="_blank">AVID</a></li>
+    <li><a href="https://www.kinosoundtrack.com" target="_blank">Kinosoundtrack</a></li>
+    <li><a href="https://freesound.org" target="_blank">Freesound</a></li>
+    <li><a href="https://aiclonevoicefree.com" target="_blank">Aiclonevoicefree</a></li>
+    <li><a href="https://www.online-convert.com" target="_blank">Online-Convert</a></li>
+    <li><a href="https://www.newcger.com" target="_blank">NewCGer</a></li>
+    <li><a href="http://www.akuziti.com/mb/" target="_blank">毛笔字在线生成器</a></li>
+    <li><a href="https://movie.douban.com" target="_blank">豆瓣电影</a></li>
+    <li><a href="https://www.gyg.la" target="_blank">观影</a></li>
+  </ul>
+</div>
+<script>
     // JavaScript: 弹出预告片功能
     document.addEventListener("DOMContentLoaded", () => {
   const images = document.querySelectorAll(".layer img");
