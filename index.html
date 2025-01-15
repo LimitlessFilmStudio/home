@@ -20,23 +20,26 @@
     .navbar {
       background-color: #333;
       border-bottom: 0px solid #ddd;
-      padding: 10px 20px;
+      padding: 2px 2px;
       display: flex;
       justify-content: flex-end; /* 将导航栏内容对齐到右上角 */
     }
     .menu {
       list-style: none;
       margin: 0;
+      margin-bottom: 10px;
       padding: 0;
       display: flex;
       gap: 20px;
     }
     .menu-item {
       position: relative;
+      margin-bottom: 10px;
     }
     .menu-button {
       background: none;
       border: none;
+      margin-bottom: 10px;
       font-size: 16px;
       cursor: pointer;
       text-align: right; 
@@ -75,38 +78,106 @@
       display: block;
     }
     /* 页头样式 */
-    header {
+    .page-header {
       display: flex;
+      height: 250px; /* 包含标题和海报的高度 */
       flex-direction: column; /* 默认纵向排列 */
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       background: #333;
       color: #fff;
-      padding: 10px 20px;
-      text-shadow: 10px 10px 10px rgba(0, 0, 0, 0.6);
+      padding: 2px 2px;
+      text-shadow: 10px 10px 10px rgba(0, 0, 0, 0.8);
+      font-weight: bold;
       margin-top: 20px;
-      margin-bottom: 20px;
+      margin-bottom: 0px;
+      z-index: 3；
     }
-    header h1 {
+    .page-header h1 {
       font-size: 24px;
       font-weight: bold;
       margin-top: 8px;
       margin-bottom: 12px;
       letter-spacing: 10px; /* 字母间距，单位可以是px、em等 */
       color: #CD0000;
+      z-index: 3; /* 确保文字高于轮播 */
     }
-    header h2,h3 {
+    .page-header h2,h3 {
       font-size: 12px;
       margin-bottom: 10px;
       letter-spacing: 5px; /* 字母间距，单位可以是px、em等 */
       color: #CD0000;
+      z-index: 3; /* 确保文字高于轮播 */
     }
-    header p {
+    .page-header p {
       font-size: 12px;
       color: #CD0000;
       margin-top: 30px;
       margin-bottom: 12px;
       letter-spacing: 8px; /* 字母间距，单位可以是px、em等 */
+      z-index: 3; /* 确保文字高于轮播 */
+    }
+    .carousel-container {
+      position: absolute;
+      top: 10px; /* 让轮播位于文字背景区域 */
+      width: 1800px;
+      height: 300px; /* 控制整体高度 */
+      z-index: 1; /* 设置低于文字 */
+      overflow: hidden;
+      background: #333; /* 背景色 */
+      display: flex;
+      align-items: center;
+      justify-content: center; /* 初始居中显示 */
+    }
+
+    .carousel {
+      display: flex;
+      flex-direction: row-reverse; /* 从右到左滚动 */
+      flex-wrap: nowrap;
+      justify-content: center;
+      align-items: center;
+      animation: scroll 20s linear infinite;
+      animation-delay: 5s; /* 页面加载5秒后开始动画 */
+    }
+
+    .carousel-item {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin: 0 15px;
+      text-align: center;
+      position: relative;
+      flex-shrink: 0; /* 防止项缩小 */
+    }
+
+    .poster {
+      width: 150px; /* 海报宽度 */
+      height: 225px; /* 海报高度 */
+      overflow: hidden;
+      border-radius: 5px; /* 圆角效果 */
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .poster img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* 确保图片按比例填充容器 */
+      display: block;
+      filter: brightness(70%); /* 将亮度降低到 70% */
+      transition: filter 0.3s ease; /* 添加过渡效果，显得更平滑 */
+    }
+    .poster img:hover {
+      filter: brightness(90%); /* 鼠标悬停时稍微提升亮度 */
+    }
+    /* 滚动动画 */
+    @keyframes scroll {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(calc(-150px * 6));
+      }
     }
     /* 容器样式 */
     .container {
@@ -215,7 +286,7 @@
         color: #fff;
         text-align: center;
         padding: 20px 0;
-        margin-top: 20px;
+        margin-top: 60px;
         font-size: 14px;
     }
     footer p {
@@ -282,23 +353,23 @@
     .layer {
       margin-top: 20px;
     }
-    header {
+    .page-header {
       margin-top: 10px;
     }
-    header h1 {
+    .page-header h1 {
       font-size: 20px;
       letter-spacing: 1px; /* 字母间距，单位可以是px、em等 */
     }
-    header h2 {
+    .page-header h2 {
       font-size: 8px;
       letter-spacing: 1px; /* 字母间距，单位可以是px、em等 */
     }
-    header h3 {
+    .page-header h3 {
       font-size: 8px;
       margin-bottom: 3px;
       letter-spacing: 3.5px; /* 字母间距，单位可以是px、em等 */
     } 
-    header p {
+    .page-header p {
       font-size: 8px;
       margin-top: 8px;
       margin-bottom: 5px;
@@ -374,11 +445,71 @@
       </li>
     </ul>
   </nav>
-  <header>
+  <header class="page-header">
     <h3>Limitless Film Studio</h3>
     <h1>不止电影工作室</h1>
     <h2>光影不止，梦想不息</h2>
     <p>不止电影工作室，以电影赋予艺术生命，用极致影像打动心灵。我们团队深耕电影与电视剧创作，经验丰富，热爱突破，不止于当下，只为呈现每一帧的震撼与奇迹。</p>
+  <!-- 将轮播容器嵌入标题部分 -->
+  <div class="carousel-container">
+    <div class="carousel">
+      <div class="carousel-item" data-movie-id="movie1">
+        <div class="poster">
+          <img src="https://p0.pipi.cn/mediaplus/friday_image_fe/cdf05c9a7f0bf8e3278dd4e71bc79874043c0.jpg?imageMogr2/thumbnail/2500x2500%3E" alt="危机航线">
+        </div>
+      </div>
+      <div class="carousel-item" data-movie-id="movie2">
+        <div class="poster">
+          <img src="https://p0.pipi.cn/mediaplus/friday_image_fe/cdf05cbf5be77e5b28d8182bf0e48ba50807a.jpg?imageMogr2/thumbnail/2500x2500%3E" alt="重生">
+        </div>
+      </div>
+      <div class="carousel-item" data-movie-id="movie3">
+        <div class="poster">
+          <img src="https://p0.pipi.cn/friday/ba9212bf54b5b3577288274e48b6d7ad.jpg?imageMogr2/thumbnail/2500x2500%3E" alt="怒潮">
+        </div>
+      </div>
+      <div class="carousel-item" data-movie-id="movie4">
+        <div class="poster">
+          <img src="https://p0.pipi.cn/friday/90f223d3357e2dab7b65b68917151303.jpg?imageMogr2/thumbnail/2500x2500%3E" alt="穿过寒冬拥抱你">
+        </div>
+      </div>
+      <div class="carousel-item" data-movie-id="movie5">
+        <div class="poster">
+          <img src="https://p0.pipi.cn/basicdata/54ecdedd0fa338d7c3c6967e05b0809f22a8c.jpg?imageMogr2/thumbnail/2500x2500%3E" alt="关于我妈的一切">
+        </div>
+      </div>
+      <div class="carousel-item" data-movie-id="movie6">
+        <div class="poster">
+          <img src="https://p0.pipi.cn/basicdata/54ecdeddddd06d395b57e2fc86c660f07d7e2.jpg?imageMogr2/thumbnail/2500x2500%3E" alt="扫黑.决战">
+        </div>
+      </div>
+      <div class="carousel-item" data-movie-id="movie7">
+        <div class="poster">
+          <img src="https://p0.pipi.cn/basicdata/54ecdedd51b7e192578d33f4a48567fd003c1.jpg?imageMogr2/thumbnail/2500x2500%3E" alt="温暖的抱抱">
+        </div>
+      </div>
+      <div class="carousel-item" data-movie-id="movie8">
+        <div class="poster">
+          <img src="https://p0.pipi.cn/basicdata/54ecdeddd7c71f87a9be120c2a23752ad9c72.jpg?imageMogr2/thumbnail/2500x2500%3E" alt="如影随心">
+        </div>
+      </div>
+      <div class="carousel-item" data-movie-id="movie9">
+        <div class="poster">
+          <img src="https://p0.pipi.cn/basicdata/54ecdedd87ae7a50c8030c79417261ce19333.jpg?imageMogr2/thumbnail/2500x2500%3E" alt="捉妖记2">
+        </div>
+      </div>
+      <div class="carousel-item" data-movie-id="movie10">
+        <div class="poster">
+          <img src="https://p0.pipi.cn/basicdata/54ecde33b53b127e12395ba188d1e881fb664.jpg?imageMogr2/thumbnail/2500x2500%3E" alt="父子雄兵">
+        </div>
+      </div>
+      <div class="carousel-item" data-movie-id="movie11">
+        <div class="poster">
+          <img src="https://p0.pipi.cn/basicdata/54ecdedd87a06d7a3571f70c0c0c399683f3e.jpg?imageMogr2/thumbnail/2500x2500%3E" alt="师父">
+        </div>
+      </div>
+    </div>
+  </div>
   </header>
   <div class="container">
     <!-- 第一层 -->
@@ -386,7 +517,7 @@
       <h2>Nathan Lee</h2>
       <p>创始人 & 剪辑指导</p><p>秉持“剪辑是故事灵魂”的理念，精通犯罪、动作、剧情等题材，以画面承载情感，用剪辑塑造力量。</p>
       <p>参与作品：</p>
-      <div class="movie-item">   
+      <div id="movie1" class="movie-item">   
         <img src="https://p0.pipi.cn/mediaplus/friday_image_fe/cdf05c9a15d5c2fa463e790a6281d8cd3cb54.jpg?imageMogr2/thumbnail/2500x2500%3E" data-trailer="https://vod.pipi.cn/fec9203cvodtransbj1251246104/791f0c341397757894326119580/v.f42905.mp4">
         <div class="movie-info"> 
         <a href="movie-details.html">
@@ -397,7 +528,7 @@
           <p><strong>总票房：</strong>3亿人民币</p> 
         </div>
       </div>
-      <div class="movie-item">
+      <div id="movie2" class="movie-item">
         <img src="https://p0.pipi.cn/mediaplus/friday_image_fe/cdf05cbf0516e36e38f87b726706cf7bc01ea.jpg?imageMogr2/thumbnail/2500x2500%3E" data-trailer="https://vod.pipi.cn/fec9203cvodtransbj1251246104/eb2fe23b1397757890956248912/v.f42905.mp4">
         <div class="movie-info">  
           <p><strong>电影：</strong>重生</p>
@@ -406,7 +537,7 @@
           <p><strong>总票房：</strong>4.64亿人民币</p> 
         </div>
       </div>
-      <div class="movie-item">
+      <div id="movie3" class="movie-item">
         <img src="https://p0.pipi.cn/friday/4bb2bb42b0dc728b32796d61e035fd83.jpg?imageMogr2/thumbnail/2500x2500%3E" data-trailer="https://vod.pipi.cn/fec9203cvodtransbj1251246104/16d41d183270835013807942221/v.f42905.mp4">
         <div class="movie-info"> 
           <p><strong>电影：</strong>怒潮</p>
@@ -415,7 +546,7 @@
           <p><strong>总票房：</strong>2.29亿人民币</p>
         </div>
       </div>
-      <div class="movie-item">
+      <div id="movie5" class="movie-item">
         <img src="https://p0.pipi.cn/basicdata/54ecdedddddb12d23c230fd57df76f2d15095.jpg?imageMogr2/thumbnail/2500x2500%3E" data-trailer="https://vod.pipi.cn/fec9203cvodtransbj1251246104/50d7e0b83701925923902310317/v.f42905.mp4">
         <div class="movie-info">
           <p><strong>电影：</strong>关于我妈的一切</p>
@@ -424,7 +555,7 @@
           <p><strong>总票房：</strong>1.5亿人民币</p>
         </div>
       </div>
-      <div class="movie-item">
+      <div id="movie8" class="movie-item">
         <img src="https://p0.pipi.cn/basicdata/54ecdedd71f0faf2aa230f42484ddc1344c98.jpg?imageMogr2/thumbnail/2500x2500%3E" data-trailer="https://vod.pipi.cn/fe5b84bcvodcq1251246104/0700073d5285890796585235953/f0.mp4">
         <div class="movie-info">  
           <p><strong>电影：</strong>如影随心</p>
@@ -433,7 +564,7 @@
           <p><strong>总票房：</strong>2367.8万人民币</p>
         </div>
       </div>
-      <div class="movie-item">
+      <div id="movie10" class="movie-item">
         <img src="https://p0.pipi.cn/basicdata/54ecde33b538070e1311e597a0ec728aa6a0a.jpg?imageMogr2/thumbnail/2500x2500%3E" data-trailer="https://vod.pipi.cn/fe5b84bcvodcq1251246104/c61db4205285890796584798340/f0.mp4">
         <div class="movie-info">   
           <p><strong>电影：</strong>父子雄兵</p>
@@ -450,7 +581,7 @@
       <p>剪辑师</p>
       <p>深耕影视艺术，专注创意剪辑，擅长精确把控节奏与镜头语言，洞察影像的每一细节。</p>
       <p>参与作品：</p>
-      <div class="movie-item">
+      <div id="movie4" class="movie-item">
         <img src="https://p0.pipi.cn/friday/90f223d3357e2dab7b65b68917151303.jpg?imageMogr2/thumbnail/2500x2500%3E" data-trailer="https://vod.pipi.cn/fec9203cvodtransbj1251246104/991567ae387702293201758081/v.f42905.mp4">
         <div class="movie-info">
           <p><strong>电影：</strong>穿过寒冬拥抱你</p>
@@ -459,7 +590,7 @@
           <p><strong>总票房：</strong>9.36亿人民币</p>
         </div>
       </div>
-      <div class="movie-item">
+      <div id="movie6" class="movie-item">
         <img src="https://p0.pipi.cn/basicdata/54ecdeddddd06d395b57e2fc86c660f07d7e2.jpg?imageMogr2/thumbnail/2500x2500%3E" data-trailer="https://vod.pipi.cn/fec9203cvodtransbj1251246104/71aa3f625285890817416165010/v.f42905.mp4">
         <div class="movie-info">
           <p><strong>电影：</strong>扫黑·决战</p>
@@ -468,7 +599,7 @@
           <p><strong>总票房：</strong>4.05亿人民币</p>
         </div>
       </div>
-      <div class="movie-item">
+      <div id="movie7" class="movie-item">
         <img src="https://p0.pipi.cn/basicdata/54ecdedd51b7e192578d33f4a48567fd003c1.jpg?imageMogr2/thumbnail/2500x2500%3E" data-trailer="https://vod.pipi.cn/fec9203cvodtransbj1251246104/01e0ac065213833187215524984/v.f42906.mp4">
         <div class="movie-info">
           <p><strong>电影：</strong>温暖的抱抱</p>
@@ -477,7 +608,7 @@
           <p><strong>总票房：</strong>8.64亿人民币</p>
         </div>
       </div>
-      <div class="movie-item">
+      <div id="movie9" class="movie-item">
         <img src="https://p0.pipi.cn/basicdata/54ecdedd87ae7a50c8030c79417261ce19333.jpg?imageMogr2/thumbnail/2500x2500%3E" data-trailer="https://vod.pipi.cn/fe5b84bcvodcq1251246104/9eafcb395285890796587142932/f0.mp4">
         <div class="movie-info">
           <p><strong>电影：</strong>捉妖记2</p>
@@ -486,7 +617,7 @@
           <p><strong>总票房：</strong>22.37亿人民币</p>
         </div>
       </div>
-      <div class="movie-item">
+      <div id="movie11" class="movie-item">
         <img src="https://p0.pipi.cn/basicdata/54ecdedd87a06d7a3571f70c0c0c399683f3e.jpg?imageMogr2/thumbnail/2500x2500%3E" data-trailer="https://vt1.doubanio.com/202412222152/5f43a43493992d64fb8ebfcdc32c1590/view/movie/M/301870551.mp4">
         <div class="movie-info">
           <p><strong>电影：</strong>师父</p>
@@ -639,6 +770,38 @@
     iframe.src = ""; // 停止播放预告片
   });
 });
+window.addEventListener('load', () => {
+  const carousel = document.querySelector('.carousel');
+  const items = document.querySelectorAll('.carousel-item');
+  const totalItems = items.length;
+
+  // 克隆前后几张海报实现循环
+  items.forEach((item) => {
+    const clone = item.cloneNode(true);
+    carousel.appendChild(clone); // 克隆到尾部
+  });
+
+  // 动态设置动画的滚动距离
+  const totalWidth = totalItems * (150 + 30); // 单张宽度 + 间距
+  const animationTime = 20; // 动画时长（秒）
+
+  // 设置动画样式
+  carousel.style.animation = `scroll ${animationTime}s linear infinite`;
+  carousel.style.width = `${totalWidth * 2}px`; // 原始+克隆宽度
+});
+document.querySelectorAll('.carousel-item').forEach(item => {
+  item.addEventListener('click', function() {
+    // 获取当前海报的对应电影位置
+    const movieId = this.dataset.movieId;  // 假设每个海报有一个 data-movie-id 属性
+    jumpToMoviePosition(movieId);
+  });
+});
+function jumpToMoviePosition(movieId) {
+  const targetMovie = document.getElementById(movieId);  // 根据海报ID查找对应的电影位置
+  if (targetMovie) {
+    targetMovie.scrollIntoView({ behavior: 'smooth' });
+  }
+}
   </script>
 </body>
 </html>
