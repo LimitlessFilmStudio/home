@@ -1,49 +1,335 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Character-details</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      color: white; /* ✅ 修改为有效属性 */
-      background-color: #333;
-    }
-    .container {
-      padding: 20px;
-      text-align: center;
-      color: white; /* ✅ 确保容器内文字也是白色 */
-    }
-    .back-button {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 10px 20px;
-      background-color: #007BFF;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    .back-button:hover {
-      background-color: #0056b3;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Nathan Lee · 剪辑指导 | 不止电影工作室">
+<meta name="theme-color" content="#0a0a0a">
+<link rel="manifest" href="manifest.json">
+<title>Nathan Lee · 剪辑指导 | 不止电影工作室</title>
+<style>
+:root {
+  --bg: #0a0a0a;
+  --bg-surface: #111316;
+  --bg-elevated: #1a1c20;
+  --border: #222529;
+  --text: #f0f0f0;
+  --text-secondary: #8a8a8a;
+  --text-muted: #555;
+  --accent: #e50914;
+  --accent-dim: rgba(229,9,20,0.15);
+  --gold: #f5c518;
+  --font: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'PingFang TC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+  --font-display: 'PingFang SC', -apple-system, 'STSong', 'Noto Serif SC', serif;
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:var(--font);
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit;text-decoration:none}
+
+.page-back{
+  position:fixed;top:20px;left:20px;z-index:100;
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 18px;
+  background:rgba(0,0,0,.6);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:100px;
+  font-size:.82rem;font-weight:500;
+  color:var(--text-secondary);
+  transition:all .25s;
+}
+.page-back:hover{color:var(--text);border-color:var(--text-muted)}
+
+.profile-hero{
+  position:relative;
+  padding:100px 24px 60px;
+  background:linear-gradient(135deg,#0a0a0a 0%,#1a0808 50%,#0a0a0a 100%);
+  overflow:hidden;
+}
+.profile-hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 50% at 50% 0%, rgba(229,9,20,.08) 0%, transparent 70%);
+  pointer-events:none;
+}
+.profile-inner{
+  max-width:1280px;margin:0 auto;
+  display:flex;align-items:center;gap:48px;
+  position:relative;z-index:2;
+}
+.profile-avatar{
+  flex:0 0 120px;
+  width:120px;height:120px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),#6b0000);
+  display:flex;align-items:center;justify-content:center;
+  font-size:2.4rem;font-weight:700;letter-spacing:4px;
+  font-family:var(--font-display);
+  box-shadow:0 8px 32px rgba(229,9,20,.3);
+}
+.profile-info h1{
+  font-family:var(--font-display);
+  font-size:clamp(1.8rem,3.5vw,2.6rem);
+  font-weight:900;letter-spacing:4px;
+  margin-bottom:4px;
+}
+.profile-info .role{
+  font-size:.9rem;color:var(--accent);
+  font-weight:500;letter-spacing:2px;
+  margin-bottom:8px;
+}
+.profile-info .origin{
+  font-size:.82rem;color:var(--text-secondary);
+}
+
+.profile-body{
+  max-width:1280px;margin:0 auto;
+  padding:60px 24px 80px;
+  display:grid;
+  grid-template-columns:1.4fr 1fr;
+  gap:48px;
+}
+.section-title{
+  font-family:var(--font-display);
+  font-size:1.1rem;font-weight:700;letter-spacing:2px;
+  margin-bottom:20px;padding-bottom:12px;
+  border-bottom:1px solid var(--border);
+}
+
+.bio-text{
+  font-size:.95rem;color:var(--text-secondary);
+  line-height:2;margin-bottom:32px;
+}
+
+.filmography{
+  list-style:none;
+}
+.filmography li{
+  display:flex;align-items:flex-start;gap:16px;
+  padding:16px 0;
+  border-bottom:1px solid rgba(255,255,255,.04);
+}
+.filmography li:last-child{border-bottom:none}
+.filmography .year{
+  flex:0 0 60px;
+  font-size:.82rem;font-weight:600;
+  color:var(--accent);
+  padding-top:2px;
+}
+.filmography .film-info h4{
+  font-size:.9rem;font-weight:600;margin-bottom:2px;
+}
+.filmography .film-info p{
+  font-size:.78rem;color:var(--text-secondary);
+}
+.filmography .film-type{
+  display:inline-block;
+  font-size:.68rem;padding:2px 8px;
+  border-radius:4px;font-weight:500;
+  margin-left:8px;
+}
+.film-type.movie{
+  background:var(--accent-dim);color:var(--accent);
+}
+.film-type.tv{
+  background:rgba(245,197,24,.15);color:var(--gold);
+}
+
+.sidebar-card{
+  background:var(--bg-surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:24px;
+  margin-bottom:20px;
+}
+.sidebar-card h4{
+  font-size:.8rem;font-weight:600;letter-spacing:2px;
+  color:var(--text-muted);margin-bottom:16px;
+}
+.sidebar-card p{
+  font-size:.85rem;color:var(--text-secondary);
+  line-height:1.8;
+}
+.sidebar-card .contact-item{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 0;
+  border-bottom:1px solid rgba(255,255,255,.04);
+  font-size:.85rem;color:var(--text-secondary);
+}
+.sidebar-card .contact-item:last-child{border-bottom:none}
+.sidebar-card .contact-label{
+  color:var(--text-muted);font-size:.75rem;
+  flex:0 0 48px;
+}
+
+.back-home{
+  display:flex;justify-content:center;padding-bottom:60px;
+}
+.back-home a{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:12px 28px;
+  border:1px solid var(--border);
+  border-radius:100px;
+  font-size:.85rem;color:var(--text-secondary);
+  transition:all .25s;
+}
+.back-home a:hover{color:var(--text);border-color:var(--text-muted)}
+
+@media(max-width:768px){
+  .profile-inner{flex-direction:column;text-align:center;gap:24px}
+  .profile-avatar{flex:0 0 100px;width:100px;height:100px;font-size:2rem}
+  .profile-body{grid-template-columns:1fr;gap:32px;padding:40px 20px 60px}
+  .profile-hero{padding:80px 20px 40px}
+  .page-back{top:12px;left:12px;font-size:.75rem;padding:8px 14px}
+}
+
+.page-fade{animation:pageIn .5s ease both}
+@keyframes pageIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+</style>
 </head>
-<body>
-  <div class="container">
-    <h1>Nathan Lee</h1>
-    <p>创始人 & 剪辑指导</p>
-    <p>四川泸州人</p>
-    <p>秉持“剪辑是故事灵魂”的理念，精通犯罪、动作、剧情等题材，以画面承载情感，用剪辑塑造力量。</p>
-    <img src="https://p0.pipi.cn/mediaplus/friday_image_fe/cdf05c9a15d5c2fa463e790a6281d8cd3cb54.jpg?imageMogr2/thumbnail/2500x2500%3E" alt="危险航线海报" style="max-width: 60%; height: auto;">
-    <p>代表作:电影《731》、《重生》、《怒潮》、《如影随心》</p>
-    <p>代表作:电视剧《围猎》、《猎罪图鉴1》、《民初奇人传》、《林海雪原》</p>
-    <!-- 返回主页按钮 -->
-    <a href="index.html" class="back-button">返回主页</a>
+<body class="page-fade">
+<a href="index.html" class="page-back">← 返回主页</a>
+
+<section class="profile-hero">
+  <div class="profile-inner">
+    <div class="profile-avatar">NL</div>
+    <div class="profile-info">
+      <h1>Nathan Lee</h1>
+      <div class="role">创始人 &amp; 剪辑指导</div>
+      <div class="origin">四川泸州人 · 从业十余年</div>
+    </div>
   </div>
+</section>
+
+<div class="profile-body">
+  <div>
+    <h3 class="section-title">个人简介</h3>
+    <div class="bio-text">
+      <p>Nathan Lee，不止电影工作室创始人、剪辑指导。秉持"剪辑是故事灵魂"的理念，精通犯罪、动作、剧情等题材，以画面承载情感，用剪辑塑造力量。</p>
+      <p>从业十余年来，参与剪辑制作了多部院线电影与热播剧集，作品涵盖犯罪动作、家庭剧情、历史战争等多种类型。累计参与项目票房超过 30 亿人民币，在业界积累了良好的口碑与信任。</p>
+      <p>善于在紧张的制作周期中保持创意品质，擅长与导演深度协作，在剪辑台上完成故事的最后一次创作。</p>
+    </div>
+
+    <h3 class="section-title">作品年表</h3>
+    <ul class="filmography">
+      <li>
+        <span class="year">2025</span>
+        <div class="film-info">
+          <h4>731 <span class="film-type movie">电影</span></h4>
+          <p>导演：赵林山 · 票房 19.43亿</p>
+        </div>
+      </li>
+      <li>
+        <span class="year">2024</span>
+        <div class="film-info">
+          <h4>危机航线 <span class="film-type movie">电影</span></h4>
+          <p>导演：彭顺 · 票房 3亿</p>
+        </div>
+      </li>
+      <li>
+        <span class="year">2024</span>
+        <div class="film-info">
+          <h4>重生 <span class="film-type movie">电影</span></h4>
+          <p>导演：马浴柯 · 票房 4.64亿</p>
+        </div>
+      </li>
+      <li>
+        <span class="year">2023</span>
+        <div class="film-info">
+          <h4>怒潮 <span class="film-type movie">电影</span></h4>
+          <p>导演：马浴柯 · 票房 2.29亿</p>
+        </div>
+      </li>
+      <li>
+        <span class="year">2021</span>
+        <div class="film-info">
+          <h4>关于我妈的一切 <span class="film-type movie">电影</span></h4>
+          <p>导演：赵天宇 · 票房 1.5亿</p>
+        </div>
+      </li>
+      <li>
+        <span class="year">2019</span>
+        <div class="film-info">
+          <h4>如影随心 <span class="film-type movie">电影</span></h4>
+          <p>导演：霍建起 · 票房 2367.8万</p>
+        </div>
+      </li>
+      <li>
+        <span class="year">2017</span>
+        <div class="film-info">
+          <h4>父子雄兵 <span class="film-type movie">电影</span></h4>
+          <p>导演：袁卫东 · 票房 1.25亿</p>
+        </div>
+      </li>
+    </ul>
+
+    <h3 class="section-title" style="margin-top:40px">电视剧作品</h3>
+    <ul class="filmography">
+      <li>
+        <span class="year">2024</span>
+        <div class="film-info">
+          <h4>围猎 <span class="film-type tv">电视剧</span></h4>
+          <p>导演：<span style="color:var(--text-muted)">待确认</span></p>
+        </div>
+      </li>
+      <li>
+        <span class="year">2022</span>
+        <div class="film-info">
+          <h4>猎罪图鉴1 <span class="film-type tv">电视剧</span></h4>
+          <p>导演：邢键钧 / 刘殊巧</p>
+        </div>
+      </li>
+      <li>
+        <span class="year">2020</span>
+        <div class="film-info">
+          <h4>民初奇人传 <span class="film-type tv">电视剧</span></h4>
+          <p>导演：杨述 / 刘坦</p>
+        </div>
+      </li>
+      <li>
+        <span class="year">2017</span>
+        <div class="film-info">
+          <h4>林海雪原 <span class="film-type tv">电视剧</span></h4>
+          <p>导演：金姝慧</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div>
+    <div class="sidebar-card">
+      <h4>联系信息</h4>
+      <div class="contact-item">
+        <span class="contact-label">邮箱</span>
+        <span>ednathan@foxmail.com</span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-label">电话/微信</span>
+        <span>178-9609-7228</span>
+      </div>
+    </div>
+    <div class="sidebar-card">
+      <h4>擅长类型</h4>
+      <p>犯罪 · 动作 · 剧情 · 历史 · 悬疑</p>
+    </div>
+    <div class="sidebar-card">
+      <h4>行业经验</h4>
+      <p>数字电影剪辑、电视剧剪辑、预告片制作、调色辅助、音效剪辑。熟练使用 AVID Media Composer、DaVinci Resolve 等专业软件。</p>
+    </div>
+  </div>
+</div>
+
+<div class="back-home">
+  <a href="index.html">← 返回首页</a>
+</div>
 </body>
 </html>
