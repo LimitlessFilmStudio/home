@@ -1,238 +1,196 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="电影详情 - 不止电影工作室">
-<meta name="theme-color" content="#0a0a0a">
-<link rel="manifest" href="manifest.json">
-<title>危机航线 · 电影详情 | 不止电影工作室</title>
-<style>
-:root {
-  --bg: #0a0a0a;
-  --bg-surface: #111316;
-  --border: #222529;
-  --text: #f0f0f0;
-  --text-secondary: #8a8a8a;
-  --text-muted: #555;
-  --accent: #e50914;
-  --accent-dim: rgba(229,9,20,0.15);
-  --gold: #f5c518;
-  --font: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'PingFang TC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
-  --font-display: 'PingFang SC', -apple-system, 'STSong', 'Noto Serif SC', serif;
-  --radius: 12px;
-  --radius-sm: 8px;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{
-  font-family:var(--font);
-  background:var(--bg);
-  color:var(--text);
-  line-height:1.6;
-  -webkit-font-smoothing:antialiased;
-}
-img{display:block;max-width:100%;height:auto}
-a{color:inherit;text-decoration:none}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>危机航线 | 不止不息Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Oswald:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #0a0a0a;
+      color: #f0ece4;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
 
-.page-back{
-  position:fixed;top:20px;left:20px;z-index:100;
-  display:inline-flex;align-items:center;gap:8px;
-  padding:10px 18px;
-  background:rgba(0,0,0,.6);
-  backdrop-filter:blur(12px);
-  -webkit-backdrop-filter:blur(12px);
-  border:1px solid rgba(255,255,255,.1);
-  border-radius:100px;
-  font-size:.82rem;font-weight:500;
-  color:var(--text-secondary);
-  transition:all .25s;
-}
-.page-back:hover{color:var(--text);border-color:var(--text-muted)}
+    .hero {
+      min-height: 70vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 120px 24px 60px;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(rgba(10,10,10,0.3), rgba(10,10,10,0.95)),
+        url('https://p0.pipi.cn/mediaplus/friday_image_fe/cdf05c9a15d5c2fa463e790a6281d8cd3cb54.jpg?imageMogr2/thumbnail/2500x2500%3E') center/cover no-repeat;
+    }
+    .hero::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 120px;
+      background: linear-gradient(to top, #0a0a0a, transparent);
+    }
+    .hero h1 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: clamp(36px, 6vw, 56px);
+      font-weight: 900;
+      letter-spacing: 6px;
+      margin-bottom: 12px;
+      text-shadow: 0 4px 30px rgba(0,0,0,0.8);
+      position: relative; z-index: 1;
+    }
+    .hero .sub {
+      font-size: 13px; font-weight: 500;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: #c0392b;
+      position: relative; z-index: 1;
+    }
 
-.movie-hero{
-  position:relative;height:70vh;min-height:400px;
-  display:flex;align-items:flex-end;
-  overflow:hidden;
-}
-.movie-hero-bg{
-  position:absolute;inset:0;
-  background:url('https://p0.pipi.cn/mediaplus/friday_image_fe/cdf05c9a7f0bf8e3278dd4e71bc79874043c0.jpg?imageMogr2/thumbnail/2500x2500%3E') center/cover no-repeat;
-  filter:blur(40px) brightness(.3) saturate(1.2);
-  transform:scale(1.2);
-}
-.movie-hero-gradient{
-  position:absolute;inset:0;
-  background:linear-gradient(to top,var(--bg) 0%,transparent 50%);
-}
-.movie-hero-content{
-  position:relative;z-index:2;
-  max-width:1280px;margin:0 auto;width:100%;
-  padding:40px 24px 60px;
-  display:flex;align-items:flex-end;gap:40px;
-}
-.movie-hero-poster{
-  flex:0 0 180px;
-  border-radius:var(--radius-sm);
-  overflow:hidden;
-  box-shadow:0 8px 32px rgba(0,0,0,.7);
-}
-.movie-hero-poster img{
-  width:100%;display:block;
-}
-.movie-hero-info h1{
-  font-family:var(--font-display);
-  font-size:clamp(1.6rem,4vw,2.6rem);
-  font-weight:900;letter-spacing:4px;
-  margin-bottom:8px;
-}
-.movie-hero-info .meta{
-  display:flex;gap:16px;flex-wrap:wrap;
-  font-size:.85rem;color:var(--text-secondary);
-  margin-bottom:16px;
-}
-.movie-hero-info .meta span{
-  display:inline-flex;align-items:center;gap:6px;
-}
-.movie-hero-info .meta .badge{
-  padding:2px 10px;border-radius:4px;
-  font-size:.72rem;font-weight:600;
-}
-.badge-year{background:var(--accent-dim);color:var(--accent)}
-.badge-boxoffice{background:rgba(245,197,24,.15);color:var(--gold)}
-.badge-rating{background:rgba(255,255,255,.08);color:var(--text)}
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 60px 24px;
+    }
 
-.movie-body{
-  max-width:1280px;margin:0 auto;
-  padding:0 24px 80px;
-  display:grid;
-  grid-template-columns:1.4fr 1fr;
-  gap:48px;
-}
-.section-title{
-  font-family:var(--font-display);
-  font-size:1.1rem;font-weight:700;letter-spacing:2px;
-  margin-bottom:20px;padding-bottom:12px;
-  border-bottom:1px solid var(--border);
-}
-.synopsis{
-  font-size:.95rem;color:var(--text-secondary);
-  line-height:2;margin-bottom:40px;
-}
-.trailer-section iframe{
-  width:100%;aspect-ratio:16/9;
-  border:none;border-radius:var(--radius-sm);
-  background:#000;
-}
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 48px;
+      background: #181818;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 32px;
+    }
+    .info-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .info-item .label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #666;
+    }
+    .info-item .value {
+      font-size: 15px;
+      font-weight: 500;
+    }
 
-.movie-sidebar{
-  display:flex;flex-direction:column;gap:24px;
-}
-.info-card{
-  background:var(--bg-surface);
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  padding:24px;
-}
-.info-card h4{
-  font-size:.8rem;font-weight:600;letter-spacing:2px;
-  color:var(--text-muted);margin-bottom:12px;
-}
-.info-row{
-  display:flex;justify-content:space-between;
-  padding:8px 0;font-size:.85rem;
-  border-bottom:1px solid rgba(255,255,255,.04);
-}
-.info-row:last-child{border-bottom:none}
-.info-row .label{color:var(--text-secondary)}
-.info-row .value{color:var(--text);font-weight:500;text-align:right}
+    .synopsis {
+      margin-bottom: 48px;
+    }
+    .synopsis h2 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 18px; font-weight: 700;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #2a2a2a;
+    }
+    .synopsis p {
+      font-size: 15px;
+      color: #999;
+      line-height: 1.9;
+    }
 
-.back-home{
-  display:flex;justify-content:center;margin-top:40px;
-}
-.back-home a{
-  display:inline-flex;align-items:center;gap:8px;
-  padding:12px 28px;
-  border:1px solid var(--border);
-  border-radius:100px;
-  font-size:.85rem;color:var(--text-secondary);
-  transition:all .25s;
-}
-.back-home a:hover{color:var(--text);border-color:var(--text-muted)}
+    .trailer-section {
+      margin-bottom: 48px;
+    }
+    .trailer-section h2 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 18px; font-weight: 700;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #2a2a2a;
+    }
+    .trailer-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #000;
+      border: 1px solid #2a2a2a;
+    }
+    .trailer-wrapper iframe {
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
 
-@media(max-width:768px){
-  .movie-hero{height:auto;min-height:auto}
-  .movie-hero-content{flex-direction:column;align-items:center;text-align:center;padding-bottom:40px}
-  .movie-hero-poster{flex:0 0 140px;width:140px}
-  .movie-hero-info .meta{justify-content:center}
-  .movie-body{grid-template-columns:1fr;gap:32px}
-  .page-back{top:12px;left:12px;font-size:.75rem;padding:8px 14px}
-}
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 28px;
+      background: #181818;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      color: #999;
+      font-size: 13px;
+      transition: all 0.2s;
+    }
+    .back-btn:hover {
+      background: #222;
+      color: #f0ece4;
+      border-color: #c0392b;
+    }
 
-.page-fade{animation:pageIn .5s ease both}
-@keyframes pageIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-</style>
+    @media (max-width: 768px) {
+      .hero { min-height: 50vh; padding: 100px 16px 40px; }
+      .info-grid { grid-template-columns: 1fr; padding: 24px; }
+    }
+  </style>
 </head>
-<body class="page-fade">
-<a href="index.html" class="page-back">← 返回主页</a>
-
-<section class="movie-hero">
-  <div class="movie-hero-bg"></div>
-  <div class="movie-hero-gradient"></div>
-  <div class="movie-hero-content">
-    <div class="movie-hero-poster">
-      <img src="https://p0.pipi.cn/mediaplus/friday_image_fe/cdf05c9a15d5c2fa463e790a6281d8cd3cb54.jpg?imageMogr2/thumbnail/2500x2500%3E" alt="危机航线海报">
-    </div>
-    <div class="movie-hero-info">
-      <h1>危机航线</h1>
-      <div class="meta">
-        <span class="badge badge-year">2024</span>
-        <span class="badge badge-boxoffice">3亿 票房</span>
+<body>
+  <section class="hero">
+    <div class="sub">2024 &middot; 动作 &middot; 犯罪</div>
+    <h1>危机航线</h1>
+  </section>
+  <div class="container">
+    <div class="info-grid">
+      <div class="info-item">
+        <span class="label">导演</span>
+        <span class="value">彭顺</span>
       </div>
-      <div class="meta">
-        <span>导演：彭顺</span>
-        <span>类型：犯罪 / 动作 / 灾难</span>
-        <span>片长：118 分钟</span>
+      <div class="info-item">
+        <span class="label">上映日期</span>
+        <span class="value">2024-09-30</span>
+      </div>
+      <div class="info-item">
+        <span class="label">总票房</span>
+        <span class="value">3亿人民币</span>
+      </div>
+      <div class="info-item">
+        <span class="label">剪辑指导</span>
+        <span class="value"><a href="Character-details.html" style="color:#c0392b;">Nathan Lee</a></span>
       </div>
     </div>
-  </div>
-</section>
 
-<div class="movie-body">
-  <div>
     <div class="synopsis">
-      <h3 class="section-title">剧情简介</h3>
+      <h2>剧情简介</h2>
       <p>"这是航班HY688，我们遭遇劫机！劫匪要价35亿人民币！目前飞机处于失控状态，请求支援！！！"</p>
-      <p>一架五星级超豪华A380客机在国际首航途中遭遇暴力劫机，整架飞机被杀意笼罩。机舱内，国际安保专家高皓军（刘德华 饰）正在和疯批悍匪团周旋，他的女儿小军（张子枫 饰）被绑为人质，性命岌岌可危。劫匪头目Mike（屈楚萧 饰）要价35亿人民币，全机乘客沦为他的筹码和玩具。</p>
-      <p>女儿和前妻傅源（刘涛 饰）先后落入魔爪，暴躁杀神高晧军开启极限反杀模式，一场高空追杀就此展开。此时机舱内已是浓烟滚滚，坠机只是时间问题！全机乘客能否安全降落，这架摇摇欲坠的豪华客机究竟是最后的栖身之所还是坠入地狱的幽灵航班？</p>
+      <p style="margin-top:12px;">一架五星级超豪华A380客机在国际首航途中遭遇暴力劫机，整架飞机被杀意笼罩。机舱内，国际安保专家高皓军（刘德华 饰）正在和疯批悍匪团周旋，他的女儿小军（张子枫 饰）被绑为人质，性命岌岌可危。劫匪头目Mike（屈楚萧 饰）要价35亿人民币，全机乘客沦为他的筹码和玩具。女儿和前妻傅源（刘涛 饰）先后落入魔爪，暴躁杀神高晧军开启极限反杀模式，一场高空追杀就此展开。此时机舱内已是浓烟滚滚，坠机只是时间问题！全机乘客能否安全降落，这架摇摇欲坠的豪华客机究竟是最后的栖身之所还是坠入地狱的幽灵航班？</p>
     </div>
 
     <div class="trailer-section">
-      <h3 class="section-title">预告片</h3>
-      <iframe src="https://vod.pipi.cn/fec9203cvodtransbj1251246104/791f0c341397757894326119580/v.f42905.mp4" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      <h2>预告片</h2>
+      <div class="trailer-wrapper">
+        <iframe src="https://vod.pipi.cn/fec9203cvodtransbj1251246104/791f0c341397757894326119580/v.f42905.mp4" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      </div>
+    </div>
+
+    <div style="text-align: center;">
+      <a href="index.html" class="back-btn">&larr; 返回首页</a>
     </div>
   </div>
-
-  <div class="movie-sidebar">
-    <div class="info-card">
-      <h4>影片信息</h4>
-      <div class="info-row"><span class="label">导演</span><span class="value">彭顺</span></div>
-      <div class="info-row"><span class="label">主演</span><span class="value">刘德华 / 张子枫 / 屈楚萧 / 刘涛</span></div>
-      <div class="info-row"><span class="label">类型</span><span class="value">犯罪 / 动作 / 灾难</span></div>
-      <div class="info-row"><span class="label">上映日期</span><span class="value">2024-09-30</span></div>
-      <div class="info-row"><span class="label">片长</span><span class="value">118 分钟</span></div>
-      <div class="info-row"><span class="label">总票房</span><span class="value">3 亿人民币</span></div>
-    </div>
-    <div class="info-card">
-      <h4>剪辑团队</h4>
-      <div class="info-row"><span class="label">剪辑指导</span><span class="value">Nathan Lee</span></div>
-      <div class="info-row"><span class="label">剪辑团队</span><span class="value">不止电影工作室</span></div>
-    </div>
-  </div>
-</div>
-
-<div class="back-home">
-  <a href="index.html">← 返回首页</a>
-</div>
 </body>
 </html>
